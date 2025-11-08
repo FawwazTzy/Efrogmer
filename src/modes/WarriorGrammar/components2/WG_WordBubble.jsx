@@ -1,22 +1,66 @@
-import React from "react";
+// src/modes/WarriorGrammar/components2/WG_WordBubble.jsx
+import React, { useRef } from "react";
 
-/**
- * Props:
- * - wordData: { id, word, pos }
- * - style: { top, left } optional
- * - onDragStart: function(e, id)
- * - isDragging: boolean
- */
 const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
+  const bubbleRef = useRef(null);
+  const touchData = useRef({ startX: 0, startY: 0 });
+
+  // 🟢 Touch events for mobile
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchData.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+    };
+    bubbleRef.current.dataset.dragging = "true";
+    if (onDragStart) onDragStart(e, wordData.id);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!bubbleRef.current.dataset.dragging) return;
+    const touch = e.touches[0];
+    const bubble = bubbleRef.current;
+
+    // gerakin posisi biar ngikut jari
+    bubble.style.left = `${touch.clientX - 25}px`;
+    bubble.style.top = `${touch.clientY - 25}px`;
+  };
+
+  const handleTouchEnd = (e) => {
+    bubbleRef.current.dataset.dragging = "";
+    const touch = e.changedTouches[0];
+    const dropTarget = document.elementFromPoint(
+      touch.clientX,
+      touch.clientY
+    );
+
+    // Kalau dilepas di atas WG_FrogTarget → trigger drop
+    if (dropTarget && dropTarget.id === "frog-target") {
+      const fakeEvent = {
+        preventDefault: () => {},
+        dataTransfer: {
+          getData: () => String(wordData.id),
+        },
+      };
+      const drop = new CustomEvent("manualDrop", {
+        detail: fakeEvent,
+      });
+      dropTarget.dispatchEvent(drop);
+    }
+  };
+
   return (
     <div
+      ref={bubbleRef}
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData("text/plain", String(wordData.id));
         if (onDragStart) onDragStart(e, wordData.id);
       }}
-      className={`
-        absolute select-none
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className={`absolute select-none
         px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2
         rounded-full font-poppins
         text-[9px] sm:text-xs md:text-sm
@@ -29,7 +73,7 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
       style={{
         userSelect: "none",
         transform: isDragging ? "rotate(-5deg)" : "rotate(0deg)",
-        backgroundSize: window.innerWidth < 640 ? "80%" : "100%", // 🟢 HP lebih kecil
+        backgroundSize: window.innerWidth < 640 ? "80%" : "100%",
         ...style,
       }}
     >

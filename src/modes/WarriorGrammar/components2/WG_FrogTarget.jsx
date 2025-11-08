@@ -1,15 +1,33 @@
 // src/modes/WarriorGrammar/components/WG_FrogTarget.jsx
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 /**
  * Props:
- * - onDrop: function(e) called when a word is dropped
+ * - onDrop: function(e) → called when a word is dropped (PC & mobile)
  * - onDragOver: function(e) optional
  * - label: string (e.g., "Adjective")
  */
 const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
+  const targetRef = useRef(null);
+
+  // 🟢 Listener tambahan biar bisa tangkap event drop dari sentuhan (mobile)
+  useEffect(() => {
+    const target = targetRef.current;
+    if (!target) return;
+
+    const handleManualDrop = (e) => {
+      // e.detail berisi fakeEvent dari WG_WordBubble
+      if (onDrop) onDrop(e.detail);
+    };
+
+    target.addEventListener("manualDrop", handleManualDrop);
+    return () => target.removeEventListener("manualDrop", handleManualDrop);
+  }, [onDrop]);
+
   return (
     <div
+      id="frog-target"
+      ref={targetRef}
       onDrop={onDrop}
       onDragOver={(e) => {
         e.preventDefault();
@@ -22,11 +40,11 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
         transition-all duration-300
       "
       style={{
-        minHeight: 60, // super pendek untuk HP
+        minHeight: 60, // biar tetep bisa di-drop di HP
       }}
     >
       {/* 🐸 Frog icon */}
-      <div className="text-2xl sm:text-3xl md:text-4xl">🐸</div> {/* lebih kecil */}
+      <div className="text-2xl sm:text-3xl md:text-4xl">🐸</div>
 
       {/* 🏷 Label */}
       <div className="mt-0.5 text-[9px] sm:text-[9px] md:text-[11px] font-bold text-slate-900 text-center">

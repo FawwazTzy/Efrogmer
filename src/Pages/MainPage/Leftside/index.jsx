@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import gavocabicon from "../../../assets/Gavocab.png";
-import starticon from "../../../assets/start.png";
+import starticon from "../../../assets/Start.png";
 
 const Leftside = () => {
   const navigate = useNavigate();

@@ -14,29 +14,64 @@
   .react-datepicker-popper {
     z-index: 9999 !important;
   }
+  
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.6),
+                0 0 15px 4px rgba(0, 255, 0, 0.6),
+                0 0 20px 6px rgba(0, 0, 255, 0.6),
+                0 0 25px 8px rgba(255, 0, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(0, 255, 255, 0.7),
+                0 0 18px 5px rgba(255, 255, 0, 0.7),
+                0 0 22px 7px rgba(255, 0, 255, 0.7),
+                0 0 28px 9px rgba(0, 255, 100, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.6),
+                0 0 15px 4px rgba(0, 255, 0, 0.6),
+                0 0 20px 6px rgba(0, 0, 255, 0.6),
+                0 0 25px 8px rgba(255, 0, 255, 0.6);
+  }
 }
 
-/* width */
-::-webkit-scrollbar {
-  /* untuk scroll Y */
-  width: 8px;
-  /* untuk scroll X */
-  height: 8px;
-
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #ffffff;
+.animate-blob {
+  animation: blob 10s infinite;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #00975c;
-  border-radius: 5px;
+.animation-delay-2000 {
+  animation-delay: 2s;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #0ab966;
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* bounce */
+@keyframes bounce-press {
+  50% {
+    transform: scale(0.92);
+  }
+}
+
+.btn-bounce:active {
+  animation: bounce-press 0.12s linear;
+}
+
 }

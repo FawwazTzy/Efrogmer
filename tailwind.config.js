@@ -5,8 +5,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Roboto", "sans-serif"], // Roboto sebagai default sans-serif
-        norwester: ["Norwester", "sans-serif"], // Norwester sebagai opsi tambahan
+        sans: ["Roboto", "sans-serif"],
+        norwester: ["Norwester", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
       colors: {
         primary: "#00975c",
@@ -20,8 +21,21 @@ export default {
       container: {
         center: true,
       },
+      keyframes: {
+        slideInRight: {
+          "0%": { transform: "translateX(100%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        slideInLeft: {
+          "0%": { transform: "translateX(-100%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        slideInRight: "slideInRight 0.6s ease-out forwards",
+        slideInLeft: "slideInLeft 0.6s ease-out forwards",
+      },
     },
   },
-  // eslint-disable-next-line no-undef
   plugins: [require("tailwind-scrollbar")],
 };

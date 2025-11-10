@@ -25,8 +25,8 @@ const WG_SidePanel = ({
   "
 >
   {/* 📘 Info Panel */}
-  <div className="bg-white/10 rounded-lg p-1 sm:p-2 text-[9px] sm:text-[7px] text-white/80">
-    <h3 className="text-[10px] sm:text-[9px] font-bold text-white text-center">
+  <div className="bg-white/10 rounded-lg p-1 sm:p-2 text-[9px] sm:text-[4px] text-white/80">
+    <h3 className="text-[10px] sm:text-[6px] font-bold text-white text-center">
       Warrior Grammar
     </h3>
     <p className="mt-0.5 leading-tight">

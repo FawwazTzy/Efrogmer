@@ -13,6 +13,8 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
       startY: touch.clientY,
     };
     bubbleRef.current.dataset.dragging = "true";
+    bubbleRef.current.style.zIndex = 50; // biar muncul di atas pas di-drag
+
     if (onDragStart) onDragStart(e, wordData.id);
   };
 
@@ -21,20 +23,19 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
     const touch = e.touches[0];
     const bubble = bubbleRef.current;
 
-    // gerakin posisi biar ngikut jari
+    // 🧩 biar posisi bubble ngikut jari dengan halus
     bubble.style.left = `${touch.clientX - 25}px`;
     bubble.style.top = `${touch.clientY - 25}px`;
   };
 
   const handleTouchEnd = (e) => {
     bubbleRef.current.dataset.dragging = "";
-    const touch = e.changedTouches[0];
-    const dropTarget = document.elementFromPoint(
-      touch.clientX,
-      touch.clientY
-    );
+    bubbleRef.current.style.zIndex = 20; // balikin z-index biar normal lagi
 
-    // Kalau dilepas di atas WG_FrogTarget → trigger drop
+    const touch = e.changedTouches[0];
+    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    // 🎯 kalau dilepas di atas WG_FrogTarget → trigger drop
     if (dropTarget && dropTarget.id === "frog-target") {
       const fakeEvent = {
         preventDefault: () => {},
@@ -42,10 +43,7 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
           getData: () => String(wordData.id),
         },
       };
-      const drop = new CustomEvent("manualDrop", {
-        detail: fakeEvent,
-      });
-      dropTarget.dispatchEvent(drop);
+      dropTarget.dispatchEvent(new CustomEvent("manualDrop", { detail: fakeEvent }));
     }
   };
 
@@ -69,6 +67,7 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
         ${isDragging ? "opacity-60 scale-90 cursor-grabbing" : "opacity-100 hover:scale-105"}
         bg-[url('https://i.pinimg.com/1200x/16/64/70/166470feb593d150b093edd0a411d3ef.jpg')]
         bg-no-repeat bg-center bg-cover text-slate-900
+        z-30
       `}
       style={{
         userSelect: "none",

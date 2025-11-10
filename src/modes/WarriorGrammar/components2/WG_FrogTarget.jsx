@@ -26,23 +26,23 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
 
   return (
     <div
-      id="frog-target"
-      ref={targetRef}
-      onDrop={onDrop}
-      onDragOver={(e) => {
-        e.preventDefault();
-        if (onDragOver) onDragOver(e);
-      }}
-      className="
-        w-full max-w-[180px] sm:max-w-[180px] md:max-w-[280px] mx-auto mt-1
-        rounded-md p-1 sm:p-1 md:p-2 flex flex-col items-center justify-center
-        bg-gradient-to-t from-yellow-200 to-emerald-400 shadow-inner
-        transition-all duration-300
-      "
-      style={{
-        minHeight: 60, // biar tetep bisa di-drop di HP
-      }}
-    >
+  onDrop={onDrop}
+  onDragOver={(e) => {
+    e.preventDefault();
+    if (onDragOver) onDragOver(e);
+  }}
+  className="
+    relative z-20               /* 🟢 biar frog selalu di atas */
+    w-full max-w-[180px] sm:max-w-[180px] md:max-w-[280px] mx-auto mt-1
+    rounded-md p-1 sm:p-1 md:p-2 flex flex-col items-center justify-center
+    bg-gradient-to-t from-yellow-200 to-emerald-400 shadow-inner
+    transition-all duration-300
+  "
+  style={{
+    minHeight: 60,
+  }}
+>
+
       {/* 🐸 Frog icon */}
       <div className="text-2xl sm:text-3xl md:text-4xl">🐸</div>
 

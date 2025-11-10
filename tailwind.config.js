@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -18,9 +18,7 @@ export default {
         textColor: "#efefef",
         dropDownArrow: "#a5a7a8",
       },
-      container: {
-        center: true,
-      },
+      container: { center: true },
       keyframes: {
         slideInRight: {
           "0%": { transform: "translateX(100%)", opacity: "0" },
@@ -30,10 +28,26 @@ export default {
           "0%": { transform: "translateX(-100%)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
+        // 🐸 Animasi makan kodok
+        frogEat: {
+          "0%, 100%": { transform: "scale(1)" },
+          "25%": { transform: "scale(1.2) rotate(-5deg)" },
+          "50%": { transform: "scale(1.3) rotate(5deg)" },
+          "75%": { transform: "scale(1.2) rotate(-3deg)" },
+        },
+        // 💥 Animasi salah (kalau belum ada)
+        shake: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "25%": { transform: "translateX(-6px)" },
+          "50%": { transform: "translateX(6px)" },
+          "75%": { transform: "translateX(-4px)" },
+        },
       },
       animation: {
         slideInRight: "slideInRight 0.6s ease-out forwards",
         slideInLeft: "slideInLeft 0.6s ease-out forwards",
+        frogEat: "frogEat 0.6s ease-in-out",
+        shake: "shake 0.4s ease-in-out",
       },
     },
   },

@@ -2,19 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===========================
+   🌈 COMPONENTS CUSTOM CLASS
+   =========================== */
 @layer components {
   .link {
     @apply cursor-pointer hover:underline;
   }
 
   .button-outline {
-    @apply rounded-md border-2 border-primary hover:bg-primary/80 hover:text-black duration-500 py-2 px-6 text-primary tracking-wider;
+    @apply rounded-md border-2 border-primary hover:bg-primary/80 hover:text-black 
+           duration-500 py-2 px-6 text-primary tracking-wider;
   }
 
   .react-datepicker-popper {
     z-index: 9999 !important;
   }
-  
+
+  .btn-bounce:active {
+    animation: bounce-press 0.12s linear;
+  }
+
+  .animate-blob {
+    animation: blob 10s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+}
+
+/* ===========================
+   💫 ANIMATIONS SECTION
+   =========================== */
+
+/* ✨ Glow Effect */
 @keyframes glow {
   0% {
     box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.6),
@@ -36,6 +66,7 @@
   }
 }
 
+/* 🟢 Blob Floating */
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);
@@ -51,27 +82,48 @@
   }
 }
 
-.animate-blob {
-  animation: blob 10s infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
-/* bounce */
+/* 🪩 Button Press Bounce */
 @keyframes bounce-press {
   50% {
     transform: scale(0.92);
   }
 }
 
-.btn-bounce:active {
-  animation: bounce-press 0.12s linear;
+/* 💥 Shake (for error/salah) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-4px); }
 }
 
+/* 🐸 Frog Eat Animation */
+@keyframes frogEat {
+  0% {
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.3) translateY(-5px);
+    filter: brightness(1.25);
+  }
+  50% {
+    transform: scale(1.15) translateY(3px);
+    filter: brightness(1.1);
+  }
+  75% {
+    transform: scale(1.25) translateY(-3px);
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+/* Tambahkan ke utilities agar bisa dipakai di className */
+@layer utilities {
+  .animate-frogEat {
+    animation: frogEat 0.5s ease-in-out;
+  }
 }

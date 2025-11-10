@@ -94,7 +94,7 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
       </div>
 
       {/* Label */}
-      <div className="mt-0.5 text-[9px] sm:text-[9px] md:text-[11px] font-bold text-slate-900 text-center">
+      <div className="mt-0.5 text-[9px] sm:text-[9px] md:text-[9px] font-bold text-slate-900 text-center">
         Feed me: <span className="capitalize">{label}</span>
       </div>
       <div className="mt-0.25 text-[7px] sm:text-[7px] md:text-[9px] text-slate-700 text-center">

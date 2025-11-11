@@ -15,11 +15,11 @@ const POS_LIST = ["adjective", "adverb", "noun", "verb", "proper noun", "pronoun
 const applyPositions = (words) => {
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
-  const isMobile = screenWidth < 2000;
+  const isMobile = screenWidth < 700;
   const isLaptop = screenWidth >= 768 && screenWidth < 1440;
   const scaleX = isMobile ? 0.8 : isLaptop ? 0.9 : 1;
   const scaleY = isMobile ? 0.7 : isLaptop ? 0.9 : 1;
-  const offsetX = isMobile ? -100 : isLaptop ? 10 : 0;
+  const offsetX = isMobile ? 9 : isLaptop ? 10 : 0;
   const offsetY = isMobile ? -25 : 0;
 
   return words.map((w) => {

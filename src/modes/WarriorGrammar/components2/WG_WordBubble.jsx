@@ -59,9 +59,9 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       className={`absolute select-none
-        px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2
+        px-2 py-1 sm:px-3 sm:py-1.5 md:px-2 md:py-3
         rounded-full font-poppins
-        text-[9px] sm:text-xs md:text-sm
+        text-[9px] sm:text-xs md:text-[13px]
         cursor-grab transition-all duration-200 ease-in-out
         shadow-[0_1px_4px_rgba(0,0,0,0.2)]
         ${isDragging ? "opacity-60 scale-90 cursor-grabbing" : "opacity-100 hover:scale-105"}
@@ -72,7 +72,7 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
       style={{
         userSelect: "none",
         transform: isDragging ? "rotate(-5deg)" : "rotate(0deg)",
-        backgroundSize: window.innerWidth < 640 ? "80%" : "100%",
+        backgroundSize: window.innerWidth < 640 ? "50%" : "100%",
         ...style,
       }}
     >

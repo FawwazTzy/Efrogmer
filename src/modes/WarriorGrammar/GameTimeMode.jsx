@@ -17,10 +17,10 @@ const applyPositions = (words) => {
   const screenHeight = window.innerHeight;
   const isMobile = screenWidth < 700;
   const isLaptop = screenWidth >= 768 && screenWidth < 1440;
-  const scaleX = isMobile ? 0.6 : isLaptop ? 0.9 : 1;
-  const scaleY = isMobile ? 0.6 : isLaptop ? 0.9 : 1;
-  const offsetX = isMobile ? -15 : isLaptop ? -5 : 0;
-  const offsetY = isMobile ? -10 : 0;
+  const scaleX = isMobile ? 0.3 : isLaptop ? 0.9 : 1;
+  const scaleY = isMobile ? 0.3 : isLaptop ? 0.9 : 1;
+  const offsetX = isMobile ? -25 : isLaptop ? -5 : 0;
+  const offsetY = isMobile ? -25 : 0;
 
   return words.map((w) => {
     let left = w.left ?? Math.floor(6 + Math.random() * 88);

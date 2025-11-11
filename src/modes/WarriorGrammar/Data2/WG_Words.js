@@ -9,7 +9,7 @@ const WG_Words = [
   { id: 4, word: "lazy", pos: "adjective", top: 360, left: 260 },
   { id: 5, word: "cold", pos: "adjective", top: 40, left: 520 },
   { id: 6, word: "strong", pos: "adjective", top: 160, left: 150 },
-  { id: 7, word: "clever", pos: "adjective", top: 450, left: 420 },
+  { id: 7, word: "clever", pos: "adjective", top: 260, left: 1000 },
   { id: 8, word: "tall", pos: "adjective", top: 240, left: 640 },
   { id: 9, word: "brave", pos: "adjective", top: 430, left: 330 },
   { id: 10, word: "young", pos: "adjective", top: 380, left: 785 },
@@ -29,7 +29,7 @@ const WG_Words = [
   // Noun 3
   { id: 21, word: "teacher", pos: "noun", top: 140, left: 260 },
   { id: 22, word: "apple", pos: "noun", top: 310, left: 620 },
-  { id: 23, word: "river", pos: "noun", top: 455, left: 870 },
+  { id: 23, word: "river", pos: "noun", top: 95, left: 950 },
   { id: 24, word: "dog", pos: "noun", top: 370, left: 180 },
   { id: 25, word: "mountain", pos: "noun", top: 30, left: 840 },
   { id: 26, word: "book", pos: "noun", top: 340, left: 730 },
@@ -48,15 +48,15 @@ const WG_Words = [
   { id: 37, word: "study", pos: "verb", top: 40, left: 320 },
   { id: 38, word: "write", pos: "verb", top: 300, left: 530 },
   { id: 39, word: "dance", pos: "verb", top: 170, left: 570 },
-  { id: 40, word: "sing", pos: "verb", top: 450, left: 230 },
+  { id: 40, word: "sing", pos: "verb", top: 100, left: 1050 },
 
   // Proper Noun 5
   { id: 41, word: "Jakarta", pos: "proper noun", top: 160, left: 670 },
   { id: 42, word: "Everest", pos: "proper noun", top: 40, left: 100 },
   { id: 43, word: "Indonesia", pos: "proper noun", top: 320, left: 80 },
   { id: 44, word: "Sahara", pos: "proper noun", top: 220, left: 510 },
-  { id: 45, word: "Amazon", pos: "proper noun", top: 485, left: 750 },
-  { id: 46, word: "Sunday", pos: "proper noun", top: 480, left: 90 },
+  { id: 45, word: "Amazon", pos: "proper noun", top: 305, left: 1100 },
+  { id: 46, word: "Sunday", pos: "proper noun", top: 400, left: 990 },
   { id: 47, word: "May", pos: "proper noun", top: 210, left: 230 },
   { id: 48, word: "Andy", pos: "proper noun", top: 170, left: 70 },
   { id: 49, word: "Gacoan", pos: "proper noun", top: 110, left: 90 },
@@ -65,9 +65,9 @@ const WG_Words = [
   // Pronoun 6
   { id: 50, word: "they", pos: "pronoun", top: 200, left: 320 },
   { id: 51, word: "we", pos: "pronoun", top: 310, left: 850 },
-  { id: 52, word: "he", pos: "pronoun", top: 455, left: 630 },
+  { id: 52, word: "he", pos: "pronoun", top: 185, left: 990 },
   { id: 53, word: "she", pos: "pronoun", top: 380, left: 460 },
-  { id: 54, word: "it", pos: "pronoun", top: 430, left: 720 },
+  { id: 54, word: "it", pos: "pronoun", top: 340, left: 920 },
   { id: 55, word: "I", pos: "pronoun", top: 30, left: 670 },
 ];
 

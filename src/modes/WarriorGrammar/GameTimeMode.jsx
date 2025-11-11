@@ -17,8 +17,8 @@ const applyPositions = (words) => {
   const screenHeight = window.innerHeight;
   const isMobile = screenWidth < 700;
   const isLaptop = screenWidth >= 768 && screenWidth < 1440;
-  const scaleX = isMobile ? 0.3 : isLaptop ? 0.9 : 1;
-  const scaleY = isMobile ? 0.3 : isLaptop ? 0.9 : 1;
+  const scaleX = isMobile ? 0.7 : isLaptop ? 0.9 : 1;
+  const scaleY = isMobile ? 0.4 : isLaptop ? 0.9 : 1;
   const offsetX = isMobile ? -25 : isLaptop ? -5 : 0;
   const offsetY = isMobile ? -25 : 0;
 

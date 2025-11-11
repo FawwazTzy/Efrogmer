@@ -17,7 +17,7 @@ const WG_HUD = ({ timeLeft, score, targetScore, lives, targetPos }) => {
     <div
       className="
         w-full max-w-5xl mx-auto mb-1 px-1.5 py-0.5
-        rounded-lg shadow-sm flex flex-wrap items-center justify-between
+        rounded-lg shadow-sm flex flex-wrap items-center justify-around
         bg-gradient-to-t from-emerald-400 to-yellow-200
         sm:px-2 sm:py-1
       "
@@ -27,7 +27,7 @@ const WG_HUD = ({ timeLeft, score, targetScore, lives, targetPos }) => {
         <span className="text-[8px] sm:text-[10px] text-emerald-900 font-medium">
           Lives
         </span>
-        <span className="text-[9px] sm:text-xs font-bold text-red-700 tracking-tight">
+        <span className="text-[9px] sm:text-xs font-bold text-red-600 tracking-tight">
           {Array(lives).fill("❤").join(" ")}
         </span>
       </div>

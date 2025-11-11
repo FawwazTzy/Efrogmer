@@ -17,10 +17,15 @@ const applyPositions = (words) => {
   const screenHeight = window.innerHeight;
   const isMobile = screenWidth < 700;
   const isLaptop = screenWidth >= 768 && screenWidth < 1440;
+
   const scaleX = isMobile ? 0.8 : isLaptop ? 0.9 : 1;
   const scaleY = isMobile ? 0.7 : isLaptop ? 0.9 : 1;
   const offsetX = isMobile ? 100 : isLaptop ? 10 : 100;
   const offsetY = isMobile ? -25 : 0;
+
+  // 🧠 Batas aman biar kata gak keluar frame
+  const safeX = isMobile ? 60 : 100;
+  const safeY = isMobile ? 80 : 120;
 
   return words.map((w) => {
     let left = w.left ?? Math.floor(6 + Math.random() * 88);
@@ -29,9 +34,9 @@ const applyPositions = (words) => {
     left = left * scaleX + offsetX;
     top = top * scaleY + offsetY;
 
-    // jaga jangan keluar layar
-    left = Math.max(10, Math.min(left, screenWidth - 60));
-    top = Math.max(10, Math.min(top, screenHeight - 60));
+    // 🚫 Jaga agar tidak keluar layar
+    left = Math.max(safeX, Math.min(left, screenWidth - safeX));
+    top = Math.max(safeY, Math.min(top, screenHeight - safeY));
 
     return { ...w, style: { left: `${left}px`, top: `${top}px` } };
   });
@@ -103,7 +108,7 @@ const GameTimeMode = () => {
     // cek benar/salah
     if (dropped.pos === targetPos) {
       setScore((s) => s + 1);
-      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" })); // ✅ animasi makan
+      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" }));
       setCorrectSinceChange((c) => {
         const now = c + 1;
         if (now >= correctChangeThreshold) {
@@ -118,7 +123,7 @@ const GameTimeMode = () => {
       });
     } else {
       setLives((l) => Math.max(0, l - 1));
-      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "wrong" })); // ❌ animasi salah
+      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "wrong" }));
     }
   };
 
@@ -147,12 +152,24 @@ const GameTimeMode = () => {
     return () => window.removeEventListener("resize", checkOrientation);
   }, []);
 
+  // 🧩 Tambahan: Re-apply posisi kata ketika ukuran layar berubah
+  useEffect(() => {
+    const handleResize = () => setWords((prev) => applyPositions(prev));
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
+
   return (
     <div className="h-screen w-screen bg-emerald-900 text-white p-2 sm:p-4 overflow-hidden relative">
-      {/* 🔒 Overlay jika portrait */}
       {isPortrait && (
         <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-6">
-          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">Please Rotate Your Device!</h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">
+            Please Rotate Your Device!
+          </h2>
           <p className="text-sm sm:text-lg">This game works best in landscape mode.</p>
         </div>
       )}
@@ -199,14 +216,12 @@ const GameTimeMode = () => {
         </div>
       </div>
 
-      {/* 🔔 Notifikasi Target Baru */}
       <WG_Notification
         show={showNotif}
         fromRight={notifFromRight}
         text={`New Target: ${targetPos.toUpperCase()}!`}
       />
 
-      {/* 🏆 Modal Win */}
       <WG_WinModal
         open={showModal}
         onClose={handleCloseModal}

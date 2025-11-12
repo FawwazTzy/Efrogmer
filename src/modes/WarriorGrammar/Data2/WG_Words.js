@@ -18,7 +18,7 @@ const WG_Words = [
   { id: 11, word: "quickly", pos: "adverb", top: 90, left: 620 },
   { id: 12, word: "silently", pos: "adverb", top: 230, left: 840 },
   { id: 13, word: "slowly", pos: "adverb", top: 430, left: 200 },
-  { id: 14, word: "happily", pos: "adverb", top: 390, left: 870 },
+  { id: 14, word: "happily", pos: "adverb", top: 80, left: 480 },
   { id: 15, word: "sadly", pos: "adverb", top: 240, left: 340 },
   { id: 16, word: "gracefully", pos: "adverb", top: 420, left: 540 },
   { id: 17, word: "carefully", pos: "adverb", top: 200, left: 650 },
@@ -29,7 +29,7 @@ const WG_Words = [
   // Noun 3
   { id: 21, word: "teacher", pos: "noun", top: 110, left: 260 },
   { id: 22, word: "apple", pos: "noun", top: 310, left: 620 },
-  { id: 23, word: "river", pos: "noun", top: 135, left: 630 },
+  { id: 23, word: "river", pos: "noun", top: 135, left: 600 },
   { id: 24, word: "dog", pos: "noun", top: 180, left: 200 },
   { id: 25, word: "mountain", pos: "noun", top: 30, left: 840 },
   { id: 26, word: "book", pos: "noun", top: 150, left: 430 },
@@ -51,7 +51,7 @@ const WG_Words = [
   { id: 40, word: "sing", pos: "verb", top: 100, left: 550 },
 
   // Proper Noun 5
-  { id: 41, word: "Jakarta", pos: "proper noun", top: 160, left: 670 },
+  { id: 41, word: "Jakarta", pos: "proper noun", top: 160, left: 650 },
   { id: 42, word: "Everest", pos: "proper noun", top: 40, left: 100 },
   { id: 43, word: "Indonesia", pos: "proper noun", top: 300, left: 80 },
   { id: 44, word: "Sahara", pos: "proper noun", top: 220, left: 510 },
@@ -64,7 +64,7 @@ const WG_Words = [
 
   // Pronoun 6
   { id: 50, word: "they", pos: "pronoun", top: 200, left: 320 },
-  { id: 51, word: "we", pos: "pronoun", top: 310, left: 700 },
+  { id: 51, word: "we", pos: "pronoun", top: 170, left: 370 },
   { id: 52, word: "he", pos: "pronoun", top: 185, left: 990 },
   { id: 53, word: "she", pos: "pronoun", top: 220, left: 460 },
   { id: 54, word: "it", pos: "pronoun", top: 340, left: 390 },

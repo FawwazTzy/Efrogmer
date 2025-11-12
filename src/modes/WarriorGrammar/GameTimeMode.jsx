@@ -164,6 +164,17 @@ const GameTimeMode = () => {
     return () => window.removeEventListener("resize", checkOrientation);
   }, []);
 
+  // 🧩 Tambahan: Re-apply posisi kata ketika ukuran layar berubah
+  useEffect(() => {
+    const handleResize = () => setWords((prev) => applyPositions(prev));
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
+
   return (
     <div className="h-screen w-screen bg-emerald-900 text-white p-2 sm:p-4 overflow-hidden relative">
       {isPortrait && (

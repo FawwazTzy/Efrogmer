@@ -11,34 +11,46 @@ import WG_SidePanel from "./components2/WG_SidePanel";
 
 const POS_LIST = ["adjective", "adverb", "noun", "verb", "proper noun", "pronoun"];
 
-// 🧩 Posisi acak disesuaikan layar
+// 🧩 Posisi acak disesuaikan layar (versi manual full control)
 const applyPositions = (words) => {
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
   const isMobile = screenWidth < 700;
   const isLaptop = screenWidth >= 768 && screenWidth < 1440;
 
-  const scaleX = isMobile ? 0.8 : isLaptop ? 0.9 : 1;
-  const scaleY = isMobile ? 0.7 : isLaptop ? 0.9 : 1;
-  const offsetX = isMobile ? 100 : isLaptop ? 10 : 100;
-  const offsetY = isMobile ? -25 : 0;
+  // 🎛️ Konfigurasi utama (ubah ini sesuka kamu)
+  const config = {
+    scaleX: 1,  // skala lebar (1 = normal, <1 = lebih rapat, >1 = lebih lebar)
+    scaleY: 1,  // skala tinggi
+    offsetX: -80, // geser horizontal (positif = kanan, negatif = kiri)
+    offsetY: 0, // geser vertikal (positif = bawah, negatif = atas)
 
-  // 🧠 Batas aman biar kata gak keluar frame
-  const safeX = isMobile ? 60 : 100;
-  const safeY = isMobile ? 80 : 120;
+    // 🔒 Batas aman biar kata gak keluar dari frame
+    safeArea: {
+      left: 40,    // jarak aman dari kiri
+      right: 190,   // jarak aman dari kanan
+      top: 50,     // jarak aman dari atas
+      bottom: 65, // jarak aman dari bawah
+    },
+  };
 
   return words.map((w) => {
+    // posisi acak dalam persentase
     let left = w.left ?? Math.floor(6 + Math.random() * 88);
     let top = w.top ?? Math.floor(6 + Math.random() * 70);
 
-    left = left * scaleX + offsetX;
-    top = top * scaleY + offsetY;
+    // ubah ke posisi pixel & terapkan skala + offset
+    left = left * config.scaleX + config.offsetX;
+    top = top * config.scaleY + config.offsetY;
 
-    // 🚫 Jaga agar tidak keluar layar
-    left = Math.max(safeX, Math.min(left, screenWidth - safeX));
-    top = Math.max(safeY, Math.min(top, screenHeight - safeY));
+    // 🚫 Batasi agar tidak keluar area aman
+    left = Math.max(config.safeArea.left, Math.min(left, screenWidth - config.safeArea.right));
+    top = Math.max(config.safeArea.top, Math.min(top, screenHeight - config.safeArea.bottom));
 
-    return { ...w, style: { left: `${left}px`, top: `${top}px` } };
+    return {
+      ...w,
+      style: { left: `${left}px`, top: `${top}px` },
+    };
   });
 };
 
@@ -116,7 +128,7 @@ const GameTimeMode = () => {
           setTargetPos(nextTarget);
           setNotifFromRight((prev) => !prev);
           setShowNotif(true);
-          setTimeout(() => setShowNotif(false), 2000);
+          setTimeout(() => setShowNotif(false), 3000);
           return 0;
         }
         return now;
@@ -182,7 +194,7 @@ const GameTimeMode = () => {
         targetPos={targetPos}
       />
 
-      <div className="flex flex-col sm:flex-row gap-3 mx-auto h-[80vh] w-full max-w-[1500px]">
+      <div className="flex flex-col sm:flex-row gap-3 mx-auto h-[83vh] w-full max-w-[1500px]">
         {/* 🎮 AREA GAME */}
         <div className="w-full sm:w-[200%] relative bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')] bg-cover bg-center bg-no-repeat rounded-lg overflow-hidden p-2 sm:p-4">
           {words.map((w) => (
@@ -193,7 +205,7 @@ const GameTimeMode = () => {
               style={{
                 position: "absolute",
                 ...w.style,
-                transform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -130%)",
                 zIndex: 20,
               }}
             />

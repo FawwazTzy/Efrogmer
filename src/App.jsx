@@ -16,6 +16,7 @@ import Game from "./Pages/Game";
 import LevelIntro from "./Pages/LevelIntro";
 import GameTimeMode from "./modes/WarriorGrammar/GameTimeMode";
 import Material from "./Pages/Material";
+import Preparation from "./modes/WarriorGrammar/Preparation";
 
 const App = () => {
   const setWindowSize = useZustandState((state) => state.setWindowSize);
@@ -43,8 +44,10 @@ const App = () => {
   <Route path="/mappage" element={<MapPage />} />
   <Route path="/mode" element={<Mode />} />
   <Route path="/material" element={<Material />} />
-  <Route path="/grammarpage" element={<GameTimeMode />} />
 
+  {/* grammar Warrior */}
+  <Route path="/grammarpage" element={<GameTimeMode />} />
+  <Route path="/preparation" element={<Preparation />} />
   
   {/* Intro per level */}
   <Route path="/level/:levelId/intro" element={<LevelIntro />} />

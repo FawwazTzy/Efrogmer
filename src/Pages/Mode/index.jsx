@@ -129,7 +129,7 @@ const Mode= () => {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => navigate("/grammarpage")}
+                        onClick={() => navigate("/preparation")}
                         className="bg-red-600 text-white font-semibold rounded-lg px-8 py-3 shadow-md hover:bg-red-700 transition-all duration-150 text-lg"
                       >
                         Next

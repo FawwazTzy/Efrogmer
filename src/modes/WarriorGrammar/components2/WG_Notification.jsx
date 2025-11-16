@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import NotifIcon from "../../Fawwaz.Allrightreserved/Frognotif.png"; // ⬅️ Import gambar kamu
 
 const WG_Notification = ({ show, fromRight = true, text }) => {
   const [visible, setVisible] = useState(false);
@@ -7,8 +8,7 @@ const WG_Notification = ({ show, fromRight = true, text }) => {
     let timer;
     if (show) {
       setVisible(true);
-      // timer buat sembunyikan notif
-      timer = setTimeout(() => setVisible(false), 3000);
+      timer = setTimeout(() => setVisible(false), 9000);
     } else {
       setVisible(false);
     }
@@ -19,13 +19,24 @@ const WG_Notification = ({ show, fromRight = true, text }) => {
 
   return (
     <div
-      className={`fixed top-1/2 left-1/3 z-50 
+      className={`fixed font-poppins top-1/3 left-1/3 z-50 
         -translate-x-1/2 -translate-y-1/2 
-        bg-black/60 text-white px-6 py-4 rounded-xl 
+        bg-black/40 text-white px-[120px] py-12 rounded-xl 
         shadow-lg text-lg font-semibold transition-opacity duration-500
+        flex flex-col items-center gap-2
+        border-4 border-green-400
         ${fromRight ? "animate-slideInRight" : "animate-slideInLeft"}`}
     >
-      {text}
+
+      {/* ⬇️ Gambar di atas teks */}
+      <img 
+        src={NotifIcon} 
+        alt="notif icon"
+        className="w-16 h-16 object-contain drop-shadow-lg"
+      />
+
+      {/* ⬇️ Teks notif */}
+      <p className="text-center">{text}</p>
     </div>
   );
 };

@@ -14,7 +14,7 @@ function ProgressBar({ score, targetScore }) {
   }
 
   return (
-    <div className="w-full px-2 py-1 rounded-md border bg-gradient-to-r from-emerald-400 to-purple-400">
+    <div className="w-full px-2 py-1 rounded-md border bg-gradient-to-r from-emerald-700 to-emerald-950">
       <div className="h-4 bg-white rounded-full overflow-hidden">
         <div
           className="h-full bg-yellow-400 transition-all"

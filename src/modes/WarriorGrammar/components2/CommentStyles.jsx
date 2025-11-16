@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const StyledWrapper = styled.div`
   .card {
-    width: 1200;
-    max-width: 100%;
+    width: 1000;
+    max-width: 85%;
     height: fit-content;
     background-color: white;
     box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01),

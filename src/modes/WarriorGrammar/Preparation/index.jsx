@@ -20,56 +20,23 @@ const Preparation = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const scrollTo = (id) => (e) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       {/* ================= HEADER ================= */}
       <header className="bg-emerald-400 text-white shadow-md fixed w-full z-50">
-        <div className="container mx-auto flex justify-between items-center p-3">
-          <img
-            src={Gavocab}
-            alt="Attack on Titan Logo"
-            className="h-6"
-          />
+  <div className="container mx-auto flex justify-between items-center p-3">
+    <img
+      src={Gavocab}
+      alt="Efrogmer Logo"
+      className="h-6"
+    />
 
-          <nav>
-            <ul className="flex space-x-2 right-0">
-              <li>
-                <a
-                  href="#hero"
-                  onClick={scrollTo("hero")}
-                  className="hover:text-gray-400 px-4 py-3"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#gridsection"
-                  onClick={scrollTo("gridsection")}
-                  className="hover:text-gray-400 px-4 py-3"
-                >
-                  Characters
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#footer"
-                  onClick={scrollTo("footer")}
-                  className="hover:text-gray-400 px-4 py-3"
-                >
-                  About
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+    <h1 className="text-xl text-emerald-900 md:text-2xl font-norwester tracking-wide">
+      EFROGMER
+    </h1>
+  </div>
+</header>
+
 
       {/* ================= HERO SECTION ================= */}
       <div
@@ -82,27 +49,23 @@ const Preparation = () => {
           transition: "background-image 1s ease-in-out",
         }}
       >
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg p-8 max-w-xl flex flex-col items-center text-center">
+        <div className="bg-white/40 backdrop-blur-md rounded-2xl shadow-lg p-8 max-w-xl flex flex-col items-center text-center">
          <img
             src={Gavocab}
             alt="Attack on Titan Logo"
             className="h-[300px] mt-12 text-center items-center bg-center"
           />
           {/* Judul */}
-          <h1 className="text-4xl md:text-5xl font-norwester mt-6 mb-6 text-blue-950">
+          <h1 className="text-2xl md:text-4xl font-norwester mt-1 mb-6 text-blue-950">
             Efrogmer
           </h1>
 
           {/* Deskripsi utama */}
           <p className="text-sm font-poppins mb-8">
-            You are given a random assortment of 16 letters in a 4×4 grid and
-            are set a time limit of three minutes. In that time, you must spell
-            as many words as possible. The words must be between 3 and 7 letters
-            long, and you can’t use the same letter twice in a single word.
+           EFROGMER is an interactive educational game designed to improve students' understanding of parts of speech in English.
+            In this game, students control a frog character,
+            whose task is to select or "eat" word bubbles that match the targeted part of speech category at each level.
           </p>
-
-          {/* Tombol mulai */}
-      {/* ////////////// */}
         </div>
       </div>
 
@@ -114,7 +77,7 @@ const Preparation = () => {
             <h2 className="text-2xl font-bold mb-2 text-blue-700">
               Preparation
             </h2>
-            <p>
+            <p className="font-poppins">
               Make sure you have a quiet environment and a timer. You will need
               paper and a pen to write down your words. When ready, click the
               “Start Game” button to begin the countdown.
@@ -126,7 +89,7 @@ const Preparation = () => {
             <h2 className="text-2xl font-bold mb-2 text-blue-700">
               How to play
             </h2>
-            <p className="mt-0.5 leading-tight">
+            <p className="mt-0.5 font-poppins leading-tight">
               Feed the frog only words that match the target part of speech.
               Every 3 correct feeds will change the target automatically.
               Reach 45 points to win early, or survive until time runs out.
@@ -136,18 +99,50 @@ const Preparation = () => {
           {/* Game tips */}
           <div>
             <h2 className="text-2xl font-bold mb-2 text-blue-700">Game tips</h2>
-            <ul className="list-disc list-inside space-y-2">
-              <li>Start with short words to get momentum.</li>
-              <li>Look for prefixes and suffixes to extend words.</li>
-              <li>Focus on high-frequency letters for easier combinations.</li>
+            <ul className="list-disc font-poppins list-inside space-y-2">
+              <li><b>1. Watch the Target Part of Speech</b></li>
+              Before you start eating bubbles, check the target text below the frog, for example:  
+              ➡ “Feed me: ADJECTIVE” <br />
+              This means you should only eat words that are adjectives.
+
+              <li><b>2. Read the Words Quickly & Carefully</b></li>
+              The bubbles will move. Make sure you read the words fast so you don’t choose the wrong one.
+
+              <li><b>3. Protect Your Lives!</b></li>
+              Your lives are shown as ⭐⭐⭐⭐⭐ <br />
+              If you eat the wrong word, you lose 1 life.  
+              Too many mistakes and the game will end quickly!
+
+              <li><b>4. Reach the Point Target to Level Up</b></li>
+              Your point target is shown in the top-right corner.  
+              If you reach the target, you level up and get a new part of speech challenge.
+
+              <li><b>5. Each Level Gets Harder</b></li>
+              The higher the level, the faster the bubbles move and the more similar the word categories become. Stay focused!
+
+              <li><b>6. Use Headphones (optional)</b></li>
+              If the game has sound effects, using headphones can make it more fun and help you focus.
+
+              <li><b>7. Don’t Panic, Control Your Rhythm</b></li>
+              Go for slower bubbles first. After you get used to it, go for the faster ones.
+
+              <li><b>8. Use the Explanations Between Levels</b></li>
+              After each level, you will see a short explanation/video. Remember the key points to avoid mistakes in the next level.
+
+              <li><b>9. Practice to Improve Your Score</b></li>
+              The more you play, the faster you’ll recognize each part of speech. Repeat levels to boost your grammar skills.
+
+              <li><b>10. Challenge Yourself!</b></li>
+              Try to reach the highest score and become the <b>EFROGMER Master!</b>
             </ul>
+
           </div>
 
            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/grammarpage")}
-              className="bg-red-600 text-white font-semibold rounded-lg px-8 py-3 shadow-md hover:bg-red-900 transition-all duration-150 text-lg"
+              className="bg-red-600 w-full font-poppins text-white font-semibold rounded-lg px-20 py-8 shadow-md hover:bg-red-900 transition-all duration-150 text-lg"
             >
             Play Now!
           </motion.button>

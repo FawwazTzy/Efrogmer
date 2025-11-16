@@ -13,7 +13,8 @@ function FrogTarget({ targetPos, onDrop, onDragOver }) {
             </div>
             
             {/* Teks Target */}
-            <div className="mt-2 text-2xl font-bold text-green-800 uppercase">
+            <div className="mt-2 text-2xl font-poppins text-green-800 uppercase">
+             <p className='text-xs text-gray-500 font-poppins text-center'>Feed me :</p>
                 {targetPos}
             </div>
             

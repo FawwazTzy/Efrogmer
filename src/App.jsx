@@ -17,48 +17,70 @@ import LevelIntro from "./Pages/LevelIntro";
 import GameTimeMode from "./modes/WarriorGrammar/GameTimeMode";
 import Material from "./Pages/Material";
 import Preparation from "./modes/WarriorGrammar/Preparation";
+//
+import RotateOverlay from "./components/RotateOverlay";
 
 const App = () => {
-  const setWindowSize = useZustandState((state) => state.setWindowSize);
+  const setWindowSize = useZustandState((s) => s.setWindowSize);
+  const setIsPortrait = useZustandState((s) => s.setIsPortrait);
+  const setIsMobileDevice = useZustandState((s) => s.setIsMobileDevice);
 
   useEffect(() => {
+    const detectDevice = () => {
+      const ua = navigator.userAgent.toLowerCase();
+
+      const isMobile =
+        /android|iphone|ipod|ipad|tablet|windows phone/i.test(ua) ||
+        window.innerWidth < 1024; // fallback tablet display
+
+      setIsMobileDevice(isMobile);
+    };
+
     const handleResize = () => {
-      const screen = {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
-      setWindowSize(screen);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      setWindowSize({ width: w, height: h });
+      setIsPortrait(h > w);
+      detectDevice();
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize();
+    window.addEventListener("orientationchange", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setWindowSize]);
+    handleResize(); // initial run
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, [setWindowSize, setIsPortrait, setIsMobileDevice]);
 
   return (
-    <Router>
-      <Routes>
-  <Route path="/" element={<Navigate to="/mainpage" replace />} />
-  <Route path="/mainpage" element={<MainPage />} />
-  <Route path="/mappage" element={<MapPage />} />
-  <Route path="/mode" element={<Mode />} />
-  <Route path="/material" element={<Material />} />
+    <>
+      <RotateOverlay /> 
 
-  {/* grammar Warrior */}
-  <Route path="/grammarpage" element={<GameTimeMode />} />
-  <Route path="/preparation" element={<Preparation />} />
-  
-  {/* Intro per level */}
-  <Route path="/level/:levelId/intro" element={<LevelIntro />} />
-  
-  {/* Game per level */}
-  <Route path="/level/:levelId/play" element={<Game />} />
-  
-  <Route path="*" element={<Status404 />} />
-</Routes>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/mainpage" replace />} />
+          <Route path="/mainpage" element={<MainPage />} />
+          <Route path="/mappage" element={<MapPage />} />
+          <Route path="/mode" element={<Mode />} />
+          <Route path="/material" element={<Material />} />
 
-    </Router>
+          {/* grammar Warrior */}
+          <Route path="/grammarpage" element={<GameTimeMode />} />
+          <Route path="/preparation" element={<Preparation />} />
+          
+          {/* Intro per level */}
+          <Route path="/level/:levelId/intro" element={<LevelIntro />} />
+          
+          {/* Game per level */}
+          <Route path="/level/:levelId/play" element={<Game />} />
+          
+          <Route path="*" element={<Status404 />} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 

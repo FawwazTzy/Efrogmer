@@ -4,17 +4,24 @@ import { StyledWrapper } from "./CommentStyles";
 const Comment = () => {
   const [comments, setComments] = useState([
     {
-      id: 1,
-      name: "Yassine Zanina",
-      time: "Wednesday, March 13th at 2:45pm",
-      text: "I've been using this product for a few days now and I'm really impressed!",
-      likes: 0,
+    id: 1,
+    name: "Fawwaz (Developer) | Has been pinned📌",
+    time: "Sunday, November 10th 2025 at 8:43 (Published)",
+    text: `IMPROVE YOUR GRAMMAR SKILLS AND ENJOY THIS EDUCATIVE GAME THROUGHT WEBSITE THAT I MADE, GUYS🔥`,
+    likes: 41,
     },
     {
       id: 2,
-      name: "Fawwaz",
-      time: "Today at 3:20pm",
-      text: "Desainnya mantap banget!",
+      name: "Timothy Ronald",
+      time: "Today at 12:56",
+      text: "Karya anak Gen z bukan kaleng-kaleng, Semangat terus kembangkan Product RnD mu buat ganti skripsi bro!",
+      likes: 0,
+    },
+    {
+      id: 3,
+      name: "Yassine Zanina",
+      time: "Wednesday, November 12th 2025 at 22:45",
+      text: "I've been using this product for a few days now and I'm really impressed!",
       likes: 0,
     },
   ]);
@@ -23,7 +30,7 @@ const Comment = () => {
   const [nameInput, setNameInput] = useState("");
 
   const [page, setPage] = useState(1);
-  const commentsPerPage = 2;
+  const commentsPerPage = 5;
 
   const lastIndex = page * commentsPerPage;
   const firstIndex = lastIndex - commentsPerPage;
@@ -77,7 +84,7 @@ const handlePost = () => {
   return (
     <StyledWrapper>
       <div className="card">
-        <span className="title">Comments</span>
+        <span className="title">Comments your score and give a feedback! </span>
 
         <div className="comment-scroll">
           {currentComments.map((c) => (

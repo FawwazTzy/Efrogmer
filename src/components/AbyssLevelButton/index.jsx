@@ -38,7 +38,7 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
       />
 
       {/* Bottom TargetPos */}
-      <div className="absolute bottom-2 w-full flex flex-col items-center
+      <div className="absolute bottom-8 w-full flex flex-col items-center
         text-emerald-950 font-poppins
         text-xs sm:text-[15px] xs:text-[9px] tracking-tight">
         {targetPos && <div>{targetPos}</div>}

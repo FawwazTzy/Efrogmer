@@ -4,7 +4,7 @@ import Leftside from "./Leftside";
 
 const MainPage = () => {
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen min-h-screen overflow-hidden">
       {/* Kiri: Tombol & Judul */}
       <div className="w-full md:w-[500px] h-full">
         <Leftside />

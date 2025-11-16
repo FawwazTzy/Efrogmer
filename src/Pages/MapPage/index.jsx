@@ -40,8 +40,7 @@ export default function MapPage() {
       {/* Centered Scroll Levels */}
       {/* Centered Scroll Levels */}
       <div className="relative w-full mt-10 pb-10 overflow-x-auto">
-        <div className="flex justify-center gap-4 sm:gap-3 md:gap-4 
-        px-12 py-12 min-w-max bg-white/40 rounded-xl">
+        <div className="flex justify-center gap-3 sm:gap-2 xs:gap-1 px-6 py-8 min-w-max bg-white/40 rounded-xl">
           {levels.map((lv) => (
             <AbyssLevelButton
               key={lv.id}

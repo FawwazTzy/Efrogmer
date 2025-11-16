@@ -49,6 +49,13 @@ export default {
         frogEat: "frogEat 0.6s ease-in-out",
         shake: "shake 0.4s ease-in-out",
       },
+      screens: {
+        xs: "360px",  // 📱 Extra Small — ukuran untuk HP kecil (misalnya: Redmi 9A, Galaxy A01, dll)
+        sm: "480px",  // 📱 Small — ukuran HP standar & menengah (Poco X Series, Samsung A-series, Oppo, Vivo)
+        md: "768px",  // 📱/💻 Medium — ukuran tablet atau layar horizontal HP
+        lg: "1024px", // 💻 Large — ukuran laptop 13 inch ke atas
+        xl: "1280px", // 🖥 Extra Large — ukuran layar desktop besar / monitor
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

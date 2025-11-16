@@ -14,9 +14,7 @@ function Game() {
 
   if (!level) {
     return (
-      <div className="p-10 text-center text-red-600">
-        Level not found!
-      </div>
+      <div className="p-10 text-center text-red-600">Level not found!</div>
     );
   }
 
@@ -28,9 +26,9 @@ function Game() {
   const [showWin, setShowWin] = useState(false);
   const [stars, setStars] = useState(0);
 
-  // set posisi kata sesuai data level (manual)
+  // Set ulang ketika level berubah
   useEffect(() => {
-    setWords(level.words); // ambil top & left dari data LEVELS
+    setWords(level.words);
     setScore(0);
     setLives(5);
     setMoves(level.moves);
@@ -71,7 +69,6 @@ function Game() {
       else if (ratio >= 0.66) earned = 2;
       else if (ratio >= 0.33) earned = 1;
       else earned = 0;
-
       setStars(earned);
       setShowWin(true);
     }
@@ -79,22 +76,25 @@ function Game() {
 
   return (
     <div className="flex flex-col min-h-screen bg-emerald-900 bg-center bg-cover bg-no-repeat">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:24px_24px]" />
-      <div className="flex flex-1 p-4">
-        {/* Panel kiri HUD */}
-        <HUD
-          score={score}
-          targetScore={level.targetScore}
-          lives={lives}
-          moves={moves}
-        />
+      {/* Pattern background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:20px_20px]" />
 
-        {/* Area game */}
-        <div className="flex-1 relative">
-          <div className="relative h-[350px] bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')] bg-cover bg-center rounded-lg overflow-hidden">
-            {/* <div className="absolute top-0 -left-20 w-72 md:w-96 h-72 md:h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob" />
-            <div className="absolute top-0 -right-20 w-72 md:w-96 h-72 md:h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-100" />
-            <div className="absolute -bottom-8 left-[250px] w-72 md:w-96 h-72 md:h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-400" /> */}
+      {/* Layout responsive: mobile = kolom, tablet/lg = baris */}
+      <div className="flex flex-1 p-4 gap-4 flex-col md:flex-row">
+        
+        {/* HUD kiri */}
+        <div className="w-full md:w-[260px]">
+          <HUD score={score} targetScore={level.targetScore} lives={lives} moves={moves} />
+        </div>
+
+        {/* Game area */}
+        <div className="flex-1 relative flex flex-col">
+
+          {/* Area gelembung kata */}
+          <div className="relative h-[260px] sm:h-[300px] md:h-[360px] lg:h-[420px] 
+            bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')]
+            bg-cover bg-center rounded-lg overflow-hidden">
+
             {words.map((wordData) => (
               <WordBubble
                 key={wordData.id}
@@ -106,7 +106,7 @@ function Game() {
           </div>
 
           {/* Kodok target */}
-          <div className="flex justify-center rounded-lg py-6 bg-gradient-to-t from-yellow-200 to-emerald-400">
+          <div className="flex justify-center rounded-lg mt-4 py-4 bg-gradient-to-t from-yellow-200 to-emerald-400">
             <FrogTarget
               targetPos={level.targetPos}
               onDrop={handleDrop}
@@ -116,7 +116,7 @@ function Game() {
         </div>
       </div>
 
-      {/* Modal Win */}
+      {/* Modal Menang */}
       {showWin && (
         <WinModal
           stars={stars}
@@ -132,4 +132,3 @@ function Game() {
 }
 
 export default Game;
-

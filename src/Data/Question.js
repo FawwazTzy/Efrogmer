@@ -41,7 +41,7 @@ const LEVELS = [
       { id: 6, word: "Lamp", pos: "Noun", top: 285, left: 220 },
       { id: 7, word: "Dog", pos: "Noun", top: 100, left: 260 },
       { id: 8, word: "Student", pos: "Noun", top: 15, left: 500 },
-      { id: 9, word: "House", pos: "Noun", top: 130, left: 940 },
+      { id: 9, word: "House", pos: "Noun", top: 130, left: 640 },
       { id: 10, word: "Monday", pos: "proper noun", top: 145, left: 800 },
       { id: 11, word: "Red", pos: "adjective", top: 185, left: 330 },
       { id: 12, word: "Proud", pos: "verb", top: 185, left: 730 },

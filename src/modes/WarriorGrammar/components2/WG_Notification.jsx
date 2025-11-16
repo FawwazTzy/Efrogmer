@@ -20,7 +20,7 @@ const WG_Notification = ({ show, fromRight = true, text }) => {
   return (
     <div
       className={`fixed font-poppins top-1/3 left-1/3 z-50 
-        -translate-x-1/2 -translate-y-1/2 
+        -translate-x-1/3 -translate-y-1/2 
         bg-black/40 text-white px-[120px] py-12 rounded-xl 
         shadow-lg text-lg font-semibold transition-opacity duration-500
         flex flex-col items-center gap-2

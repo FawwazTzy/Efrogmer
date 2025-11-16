@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import LEVELS from "../../Data/Question";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { AppleIcon } from "lucide-react";
 
 export default function LevelIntro() {
   const { levelId } = useParams();
@@ -86,7 +87,7 @@ export default function LevelIntro() {
               onClick={() => navigate(`/level/${level.id}/play`)}
               className="px-6 py-3 rounded-full bg-gradient-to-r from-emerald-200 to-emerald-500 text-[#0b1320] font-poppins shadow-[0_0_10px_rgba(255,220,90,0.6)] hover:scale-105 transition flex items-center gap-2"
             >
-              ▶ Start Challenge
+              =▶ Start Challenge
             </button>
           </div>
 

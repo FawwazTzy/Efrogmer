@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import gavocabicon from "../../../assets/Gavocab.png";
+import gavocabicon from "../../../assets/Efrogmer1.jpeg";
 import starticon from "../../../assets/Start.png";
 
 const Leftside = () => {

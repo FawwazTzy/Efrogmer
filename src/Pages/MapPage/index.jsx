@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AbyssLevelButton from "../../components/AbyssLevelButton";
 import Levelup from "../../assets/Levelup.png";
+import { motion } from "framer-motion";
+import gavocabicon from "../../assets/Efrogmer1.jpeg";
 
 const levels = [
   { id: 1, stars: 3, unlocked: true, targetPos: "Noun" },
@@ -22,19 +24,36 @@ export default function MapPage() {
     <div className="min-h-screen flex flex-col items-center bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')] bg-cover text-white relative">
 
       {/*Top UI*/}
-      <div className="w-full bg-emerald-900 px-3 py-2 sm:px-4 sm:py-3 flex justify-between text-base sm:text-lg">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="px-2 py-1 font-norwester rounded-full">
-            Part of Speech's Levels
+        <div className="w-full bg-emerald-900 px-3 py-2 sm:px-4 sm:py-3 flex items-center justify-between text-xs xs:text-sm sm:text-base md:text-lg">
+
+          {/* Left Title */}
+          <div className="flex items-center gap-1 xs:gap-2 sm:gap-3">
+            <div className="px-2 py-1 font-norwester rounded-full">
+              Part of Speech's Levels
+            </div>
+            <img
+              src={Levelup}
+              alt="Part of Speech Icon"
+              className="w-4 h-4 xs:w-5 xs:h-5 sm:w-7 sm:h-7 object-contain"
+            />
           </div>
-          <img
-            src={Levelup}
-            alt="Part of Speech Icon"
-            className="w-5 h-5 sm:w-7 sm:h-7 object-contain"
+
+          {/* Right Icon / Profile */}
+          <motion.img
+            src={gavocabicon}
+            alt="funny gif"
+            className="rounded-full object-cover bg-no-repeat bg-center bg-cover
+              shadow-[0_0_6px_1px_rgba(255,0,0,0.6),
+                      0_0_8px_2px_rgba(0,255,0,0.6),
+                      0_0_10px_3px_rgba(0,0,255,0.6),
+                      0_0_12px_4px_rgba(255,0,255,0.6)]
+              animate-[glow_3s_ease-in-out_infinite]
+              h-[clamp(38px,6vw,64px)] w-[clamp(38px,6vw,64px)]"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
           />
         </div>
-        <div className="opacity-90">Traveler</div>
-      </div>
+
 
       {/* Centered Scroll Levels */}
       <div className="relative w-full mt-6 sm:mt-10 pb-6 overflow-x-auto">

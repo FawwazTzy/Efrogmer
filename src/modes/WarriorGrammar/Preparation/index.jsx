@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Eg1 from "../../Fawwaz.Allrightreserved/English1.png"
 import Eg2 from "../../Fawwaz.Allrightreserved/English2.png";
 import Eg3 from "../../Fawwaz.Allrightreserved/English3.png";
-import Gavocab from "../../../../public/Gavocab.png";
+import Gavocab from "../../../../public/Efrogmer1.jpeg";
 import Comment from "../components2/Comment";
 
 const Preparation = () => {

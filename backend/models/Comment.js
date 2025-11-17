@@ -1,9 +1,10 @@
+// models/Comment.js
 import mongoose from "mongoose";
 
-const CommentSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+const commentSchema = new mongoose.Schema({
+  name: { type: String, default: "Guest" },
   text: { type: String, required: true },
-  likes: { type: Number, default: 0 },
+  likes: { type: Number, default: 0 }
 }, { timestamps: true });
 
-export default mongoose.model("Comment", CommentSchema);
+export default mongoose.model("Comment", commentSchema);

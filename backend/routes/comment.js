@@ -1,59 +1,44 @@
+// routes/comment.js
 import express from "express";
-import Comment from "../models/comment.js"
+import Comment from "../models/Comment.js";
 
 const router = express.Router();
 
-// GET comments (with pagination)
+// GET comments with pagination
 router.get("/", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
+  const skip = (page - 1) * limit;
 
-  try {
-    const total = await Comment.countDocuments();
-    const comments = await Comment.find()
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
-
-    res.json({
-      comments,
-      page,
-      totalPages: Math.ceil(total / limit),
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  const total = await Comment.countDocuments();
+  const comments = await Comment.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
+  res.json({ comments, page, totalPages: Math.ceil(total / limit) });
 });
 
 // POST comment
 router.post("/", async (req, res) => {
-  try {
-    const comment = new Comment(req.body);
-    const saved = await comment.save();
+  const { name, text } = req.body;
+  const newComment = new Comment({ name, text });
+  await newComment.save();
 
-    // realtime via socket.io
-    req.io.emit("new_comment", saved);
+  // emit via socket
+  const io = req.app.get("io");
+  io.emit("new_comment", newComment);
 
-    res.status(201).json(saved);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  res.status(201).json(newComment);
 });
 
 // PATCH like
 router.patch("/:id/like", async (req, res) => {
-  try {
-    const comment = await Comment.findById(req.params.id);
-    if (!comment) return res.status(404).json({ error: "Comment not found" });
+  const comment = await Comment.findById(req.params.id);
+  if (!comment) return res.status(404).json({ message: "Comment not found" });
+  comment.likes += 1;
+  await comment.save();
 
-    comment.likes += 1;
-    await comment.save();
+  const io = req.app.get("io");
+  io.emit("like_updated", { id: comment._id, likes: comment.likes });
 
-    req.io.emit("like_updated", { id: comment._id, likes: comment.likes });
-    res.json(comment);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  res.json({ id: comment._id, likes: comment.likes });
 });
 
 export default router;

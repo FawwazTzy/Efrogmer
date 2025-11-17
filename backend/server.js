@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new SocketIO(server, {
   cors: {
-    origin: process.env.CLIENT_ORIGIN || "*", // ganti dengan domain client saat deploy
+    origin: process.env.CLIENT_ORIGIN || "*",
     methods: ["GET", "POST", "PATCH", "DELETE"]
   }
 });

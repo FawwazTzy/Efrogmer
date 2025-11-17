@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchComments, postComment, likeComment } from "../../../api/comment.js";
-import { io } from "socket.io-client";
 import { StyledWrapper } from "./CommentStyles";
 
-const socket = io(import.meta.env.VITE_API_BASE || "http://localhost:5000");
+import { io } from "socket.io-client";
+const socket = io(import.meta.env.VITE_API_BASE);
 
 const Comment = () => {
   const [comments, setComments] = useState([]);

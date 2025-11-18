@@ -11,7 +11,7 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
   const [animState, setAnimState] = useState("idle"); // "idle" | "eat" | "wrong"
   const [icon, setIcon] = useState("🐸");
 
-  // 🧠 preload audio agar tidak delay
+  // 🧠 Preload audio agar tidak delay
   useEffect(() => {
     correctRef.current = new Audio(correctSfx);
     wrongRef.current = new Audio(wrongSfx);
@@ -27,7 +27,7 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
     }
   };
 
-  // 🐸 global frog reaction: called from game logic
+  // 🐸 Listen global frogReaction event (dipanggil dari GameTimeMode)
   useEffect(() => {
     const handleFrogReaction = (e) => {
       const result = e.detail;
@@ -58,33 +58,36 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
     }, 700);
   };
 
-  // 📱 Support drop dari HP (manualDrop)
-  useEffect(() => {
-    const frog = targetRef.current;
-    if (!frog) return;
-
-    const handleManualDrop = (e) => {
-      const { wordId } = e.detail;
-      if (onDrop) onDrop({ dataTransfer: { getData: () => String(wordId) } });
-    };
-
-    frog.addEventListener("manualDrop", handleManualDrop);
-    return () => frog.removeEventListener("manualDrop", handleManualDrop);
-  }, [onDrop]);
-
-  // 🎨 Animasi berdasarkan state
+  // 🎨 Tentukan animasi berdasarkan state
   let animClass = "";
   if (animState === "eat") animClass = "animate-frogEat";
   else if (animState === "wrong") animClass = "animate-shake text-red-600";
+
+  // 📱 Support HP Drop (dari WordBubble TouchDrop event)
+  useEffect(() => {
+    const handleTouchDrop = (e) => {
+      const { x, y, wordId } = e.detail;
+      const frog = targetRef.current;
+      if (!frog) return;
+
+      const rect = frog.getBoundingClientRect();
+      const inside =
+        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+
+      if (inside && onDrop) {
+        onDrop({ preventDefault: () => {}, dataTransfer: { getData: () => wordId } });
+      }
+    };
+
+    window.addEventListener("frogTouchDrop", handleTouchDrop);
+    return () => window.removeEventListener("frogTouchDrop", handleTouchDrop);
+  }, [onDrop]);
 
   return (
     <div
       ref={targetRef}
       id="frog-target"
-      onDrop={(e) => {
-        e.preventDefault();
-        if (onDrop) onDrop(e);
-      }}
+      onDrop={onDrop}
       onDragOver={(e) => {
         e.preventDefault();
         onDragOver && onDragOver(e);

@@ -15,24 +15,21 @@ function Game() {
     return <div className="p-10 text-center text-red-600">Level not found!</div>;
   }
 
-  // handy aliases used below
   const targetScore = level.targetScore ?? 0;
   const totalMoves = level.moves ?? 0;
   const currentLevel = levelIndex + 1;
 
-  // Init from level to avoid "empty words on first render" problem
   const [words, setWords] = useState(() => level.words ?? []);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(5);
-  const [moves, setMoves] = useState(() => level.moves ?? 0);
+  const [moves, setMoves] = useState(totalMoves);
   const [draggedWordId, setDraggedWordId] = useState(null);
+  const [touchPosition, setTouchPosition] = useState(null);
   const [showWin, setShowWin] = useState(false);
   const [stars, setStars] = useState(0);
-
-  // Guard to prevent end-check running before initial reset completes
   const [initialized, setInitialized] = useState(false);
 
-  // Reset level when changing level page
+  // Reset level saat berubah
   useEffect(() => {
     setWords(level.words ?? []);
     setScore(0);
@@ -40,29 +37,15 @@ function Game() {
     setMoves(level.moves ?? 0);
     setShowWin(false);
     setStars(0);
-
-    // mark initialized after resets
     setInitialized(true);
 
-    // cleanup on unmount / level change (optional)
     return () => setInitialized(false);
   }, [level]);
 
-  // ========== HANDLE DRAG / DROP ==========
+  // ========== DESKTOP DRAG ==========
   const handleDragStart = (e, id) => {
     setDraggedWordId(id);
-    e.dataTransfer?.setData("wordId", id);
-  };
-
-  const handleTouchStart = (e, id) => {
-    setDraggedWordId(id);
-  };
-
-  const handleTouchEnd = (e) => {
-    const touch = e.changedTouches[0];
-    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-    if (!dropTarget || !dropTarget.closest("[data-targetpos]")) return;
-    processDrop(draggedWordId);
+    e.dataTransfer?.setData("wordId", id.toString());
   };
 
   const handleDrop = (e) => {
@@ -73,32 +56,61 @@ function Game() {
     processDrop(wordId);
   };
 
+  // ========== TOUCH / HP DRAG ==========
+  const handleTouchStart = (e, id) => {
+    const touch = e.touches[0];
+    setDraggedWordId(id);
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!draggedWordId) return;
+    const touch = e.touches[0];
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!draggedWordId) return;
+    const touch = e.changedTouches[0];
+    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    if (dropTarget && dropTarget.closest("[data-targetpos]")) {
+      processDrop(draggedWordId);
+    }
+
+    setDraggedWordId(null);
+    setTouchPosition(null);
+  };
+
+  // ========== PROCESS DROP ==========
   const processDrop = (wordId) => {
-    // basic guards
-    if (!initialized) return;
-    if (moves <= 0 || lives <= 0) return;
+    if (!initialized || moves <= 0 || lives <= 0) return;
 
     const droppedWord = words.find((w) => w.id === wordId);
     if (!droppedWord) return;
 
     setMoves((prev) => prev - 1);
 
-    // NOTE: level.targetPos and word.pos must be consistent in casing/format.
-    if (String(droppedWord.pos).toLowerCase() === String(level.targetPos).toLowerCase()) {
+    const correct =
+      String(droppedWord.pos).toLowerCase() ===
+      String(level.targetPos).toLowerCase();
+
+    if (correct) {
       window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" }));
       setScore((prev) => prev + 1);
+      if (navigator.vibrate) navigator.vibrate(80);
     } else {
       window.dispatchEvent(new CustomEvent("frogReaction", { detail: "wrong" }));
       setLives((prev) => Math.max(0, prev - 1));
+      if (navigator.vibrate) navigator.vibrate([50, 50, 70]);
     }
 
     setWords((prev) => prev.filter((w) => w.id !== wordId));
-    setDraggedWordId(null);
   };
 
-  // ===== END LEVEL CONDITIONS =====
+  // ========== LEVEL END CHECK ==========
   useEffect(() => {
-    if (!initialized) return; // do nothing until init done
+    if (!initialized) return;
 
     if (moves <= 0 || lives <= 0 || words.length === 0) {
       const ratio = targetScore > 0 ? score / targetScore : 0;
@@ -109,12 +121,18 @@ function Game() {
 
       setStars(earned);
       setShowWin(true);
+
+      // Save progress localStorage
+      localStorage.setItem(
+        `level_${currentLevel}`,
+        JSON.stringify({ score, stars: earned })
+      );
     }
-    // intentionally not including `level` refs in deps since this effect is per-mount
-  }, [moves, lives, words.length, score, initialized, targetScore]);
+  }, [moves, lives, words.length, score, initialized, targetScore, currentLevel]);
 
   return (
     <div className="flex flex-col min-h-screen bg-emerald-900 bg-center bg-cover bg-no-repeat relative">
+      {/* GRID LINES */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:20px_20px]" />
 
       <div className="flex flex-1 p-2 sm:p-4 gap-3 flex-col md:flex-row">
@@ -139,8 +157,10 @@ function Game() {
                 wordData={wordData}
                 onDragStart={(e) => handleDragStart(e, wordData.id)}
                 onTouchStart={(e) => handleTouchStart(e, wordData.id)}
+                onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
                 isDragging={wordData.id === draggedWordId}
+                touchPosition={touchPosition}
               />
             ))}
           </div>

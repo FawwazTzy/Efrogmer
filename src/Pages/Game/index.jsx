@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import HUD from "../../components/HUD";
 import FrogTarget from "../../components/FrogTarget";
@@ -56,57 +56,75 @@ function Game() {
     processDrop(wordId);
   };
 
-  // ========== TOUCH / HP DRAG ==========
+  // ========== TOUCH / HP DRAG (Game keeps basic touch state) ==========
   const handleTouchStart = (e, id) => {
-    const touch = e.touches[0];
+    const touch = e.touches?.[0];
     setDraggedWordId(id);
-    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+    if (touch) setTouchPosition({ x: touch.clientX, y: touch.clientY });
   };
 
   const handleTouchMove = (e) => {
     if (!draggedWordId) return;
-    const touch = e.touches[0];
-    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+    const touch = e.touches?.[0];
+    if (touch) setTouchPosition({ x: touch.clientX, y: touch.clientY });
   };
 
   const handleTouchEnd = (e) => {
     if (!draggedWordId) return;
-    const touch = e.changedTouches[0];
-    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-
-    if (dropTarget && dropTarget.closest("[data-targetpos]")) {
-      processDrop(draggedWordId);
+    const touch = e.changedTouches?.[0];
+    if (touch) {
+      const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (dropTarget && dropTarget.closest("[data-targetpos]")) {
+        processDrop(draggedWordId);
+      }
     }
-
     setDraggedWordId(null);
     setTouchPosition(null);
   };
 
   // ========== PROCESS DROP ==========
-  const processDrop = (wordId) => {
-    if (!initialized || moves <= 0 || lives <= 0) return;
+  const processDrop = useCallback(
+    (wordId) => {
+      if (!initialized || moves <= 0 || lives <= 0) return;
 
-    const droppedWord = words.find((w) => w.id === wordId);
-    if (!droppedWord) return;
+      const droppedWord = words.find((w) => w.id === wordId);
+      if (!droppedWord) return;
 
-    setMoves((prev) => prev - 1);
+      setMoves((prev) => prev - 1);
 
-    const correct =
-      String(droppedWord.pos).toLowerCase() ===
-      String(level.targetPos).toLowerCase();
+      const correct =
+        String(droppedWord.pos).toLowerCase() === String(level.targetPos).toLowerCase();
 
-    if (correct) {
-      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" }));
-      setScore((prev) => prev + 1);
-      if (navigator.vibrate) navigator.vibrate(80);
-    } else {
-      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "wrong" }));
-      setLives((prev) => Math.max(0, prev - 1));
-      if (navigator.vibrate) navigator.vibrate([50, 50, 70]);
-    }
+      if (correct) {
+        window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" }));
+        setScore((prev) => prev + 1);
+        if (navigator.vibrate) navigator.vibrate(80);
+      } else {
+        window.dispatchEvent(new CustomEvent("frogReaction", { detail: "wrong" }));
+        setLives((prev) => Math.max(0, prev - 1));
+        if (navigator.vibrate) navigator.vibrate([50, 50, 70]);
+      }
 
-    setWords((prev) => prev.filter((w) => w.id !== wordId));
-  };
+      setWords((prev) => prev.filter((w) => w.id !== wordId));
+    },
+    [initialized, moves, lives, words, level]
+  );
+
+  // ========== TOUCH DROP LISTENER (listens to WordBubble frogTouchDrop) ==========
+  useEffect(() => {
+    const handleFrogTouchDrop = (e) => {
+      const { wordId } = e.detail ?? {};
+      if (!wordId) return;
+      // call processDrop with the wordId emitted by WordBubble
+      processDrop(Number(wordId));
+      // clear dragging state
+      setDraggedWordId(null);
+      setTouchPosition(null);
+    };
+
+    window.addEventListener("frogTouchDrop", handleFrogTouchDrop);
+    return () => window.removeEventListener("frogTouchDrop", handleFrogTouchDrop);
+  }, [processDrop]);
 
   // ========== LEVEL END CHECK ==========
   useEffect(() => {
@@ -172,7 +190,7 @@ function Game() {
             onDragOver={(e) => e.preventDefault()}
             data-targetpos={level.targetPos}
           >
-            <FrogTarget targetPos={level.targetPos} />
+            <FrogTarget targetPos={level.targetPos} onDrop={(wordId) => processDrop(Number(wordId))} />
           </div>
         </div>
       </div>

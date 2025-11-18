@@ -14,7 +14,7 @@ const levels = [
   { id: 6, stars: 0, unlocked: true, targetPos: "Preposition" },
   { id: 7, stars: 0, unlocked: true, targetPos: "Conjunction" },
   { id: 8, stars: 0, unlocked: true, targetPos: "Interjection" },
-  { id: 9, stars: 0, unlocked: false, targetPos: "Determiner" },
+  { id: 9, stars: 0, unlocked: true, targetPos: "Determiner" },
 ];
 
 export default function MapPage() {

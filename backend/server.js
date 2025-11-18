@@ -11,43 +11,56 @@ import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
+// ===== Allowed origins =====
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://testingfrog.netlify.app"
+];
+
 const app = express();
 const server = http.createServer(app);
+
 const io = new SocketIO(server, {
   cors: {
-    origin: process.env.CLIENT_ORIGIN || "*",
-    methods: ["GET", "POST", "PATCH", "DELETE"]
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    credentials: true
   }
 });
 
-// small rate limiter
+// ===== Rate limiter (API safety) =====
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200 // per IP
+  windowMs: 15 * 60 * 1000,
+  max: 200
 });
 
+// ===== Middleware =====
 app.use(limiter);
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || "*"
+  origin: allowedOrigins,
+  credentials: true
 }));
 app.use(express.json());
 
-// attach io to app so routes can emit
+// Attach io so routes can emit events
 app.set("io", io);
 
-// routes
+// ===== Routes =====
 app.use("/comments", commentRoutes);
 
-// socket events (optional)
+// ===== Socket Events =====
 io.on("connection", (socket) => {
   console.log("Socket connected:", socket.id);
-  socket.on("disconnect", () => console.log("Socket disconnected:", socket.id));
+
+  socket.on("disconnect", () => {
+    console.log("Socket disconnected:", socket.id);
+  });
 });
 
-// DB connect + start server
+// ===== Database & Server Start =====
 const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGO_URI, { })
+mongoose.connect(process.env.MONGO_URI, {})
   .then(() => {
     console.log("MongoDB connected");
     server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

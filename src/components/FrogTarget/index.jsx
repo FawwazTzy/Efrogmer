@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import correctSfx from "../../assets/Sound/Correct.mp3";
 import wrongSfx from "../../assets/Sound/Wrong.mp3";
 
-function FrogTarget({ targetPos }) {
+function FrogTarget({ targetPos, onDrop }) {
+  const frogRef = useRef(null);
   const correctRef = useRef(null);
   const wrongRef = useRef(null);
 
@@ -26,7 +27,7 @@ function FrogTarget({ targetPos }) {
     audio.play().catch(() => {});
   };
 
-  // listen to global frogReaction event
+  // global frog reaction from Game.jsx
   useEffect(() => {
     const handleReaction = (e) => {
       if (e.detail === "correct") triggerEat();
@@ -37,6 +38,26 @@ function FrogTarget({ targetPos }) {
     return () => window.removeEventListener("frogReaction", handleReaction);
   }, []);
 
+  // ========== NEW: HANDLE TOUCH DROP ==========
+  useEffect(() => {
+    const handleTouchDrop = (e) => {
+      const { x, y, wordId } = e.detail || {};
+      if (!frogRef.current || !wordId) return;
+
+      const elemAtPoint = document.elementFromPoint(x, y);
+      if (!elemAtPoint) return;
+
+      const isInside = elemAtPoint.closest("#frog-dropzone");
+      if (isInside) {
+        onDrop?.(wordId); // notify Game.jsx
+      }
+    };
+
+    window.addEventListener("frogTouchDrop", handleTouchDrop);
+    return () => window.removeEventListener("frogTouchDrop", handleTouchDrop);
+  }, [onDrop]);
+
+  // animations
   const triggerEat = () => {
     setIcon("😋");
     setAnimState("eat");
@@ -63,6 +84,8 @@ function FrogTarget({ targetPos }) {
 
   return (
     <div
+      id="frog-dropzone"
+      ref={frogRef}
       className="
         w-[90%] sm:w-64
         h-[90px] xs:h-[100px] sm:h-[100px]
@@ -72,8 +95,7 @@ function FrogTarget({ targetPos }) {
       "
     >
       <div
-        className={`
-          w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center
+        className={`w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center
           text-xl sm:text-3xl font-extrabold shadow-xl
           bg-green-600 rounded-full transition-all duration-200 ${animClass}
         `}

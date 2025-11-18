@@ -99,6 +99,32 @@ const GameTimeMode = () => {
     }
   }, [timeLeft, lives, score]);
 
+    // 📱 Mobile Touch Drop Support
+  useEffect(() => {
+    const handleTouchDrop = (e) => {
+      const { x, y, wordId } = e.detail || {};
+      if (!wordId) return;
+
+      // cek elemen yang disentuh
+      const elem = document.elementFromPoint(x, y);
+      if (!elem) return;
+
+      const dropZone = elem.closest("#wg-dropzone");
+      if (dropZone) {
+        handleDrop({
+          preventDefault: () => {},
+          dataTransfer: {
+            getData: () => wordId
+          }
+        });
+      }
+    };
+
+    window.addEventListener("wgTouchDrop", handleTouchDrop);
+    return () => window.removeEventListener("wgTouchDrop", handleTouchDrop);
+  }, [words, targetPos, timeLeft, lives]);
+
+
   // 🎯 Target baru
   const pickNextTarget = () => {
     const candidates = POS_LIST.filter((p) => p !== targetPos);

@@ -18,15 +18,16 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
     if (onDragStart) onDragStart(e, wordData.id);
   };
 
-  const handleTouchMove = (e) => {
-    if (!bubbleRef.current.dataset.dragging) return;
-    const touch = e.touches[0];
-    const bubble = bubbleRef.current;
+  // ❌ HAPUS handleTouchMove agar bubble TIDAK mengikuti jari saat geser (menghilangkan "yang kedua" yang tenggelam)
+  // const handleTouchMove = (e) => {
+  //   if (!bubbleRef.current.dataset.dragging) return;
+  //   const touch = e.touches[0];
+  //   const bubble = bubbleRef.current;
 
-    // 🧩 biar posisi bubble ngikut jari dengan halus
-    bubble.style.left = `${touch.clientX - 25}px`;
-    bubble.style.top = `${touch.clientY - 25}px`;
-  };
+  //   // 🧩 biar posisi bubble ngikut jari dengan halus
+  //   bubble.style.left = `${touch.clientX - 25}px`;
+  //   bubble.style.top = `${touch.clientY - 25}px`;
+  // };
 
   const handleTouchEnd = (e) => {
     bubbleRef.current.dataset.dragging = "";
@@ -56,7 +57,8 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
         if (onDragStart) onDragStart(e, wordData.id);
       }}
       onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
+      // ❌ HAPUS onTouchMove agar tidak ada touch move yang menyebabkan tenggelam
+      // onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       className={`absolute select-none
         px-2 py-1 sm:px-3 sm:py-1.5 md:px-2 md:py-3

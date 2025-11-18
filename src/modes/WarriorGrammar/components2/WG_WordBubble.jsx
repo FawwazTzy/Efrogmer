@@ -1,65 +1,49 @@
 // src/modes/WarriorGrammar/components2/WG_WordBubble.jsx
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 
 const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
   const bubbleRef = useRef(null);
-  const isTouchDragging = useRef(false);
+  const touchData = useRef({ startX: 0, startY: 0 });
 
-  // ❗ Biar touchmove tidak dianggap scroll
-  useEffect(() => {
-    const elem = bubbleRef.current;
-    if (!elem) return;
-
-    const prevent = (e) => e.preventDefault();
-    elem.addEventListener("touchmove", prevent, { passive: false });
-
-    return () => elem.removeEventListener("touchmove", prevent);
-  }, []);
-
+  // 🟢 Touch events for mobile
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
-    isTouchDragging.current = true;
-
-    const bubble = bubbleRef.current;
-    bubble.style.zIndex = 80;
-    bubble.style.position = "fixed"; // penting agar gerakan akurat
-    bubble.style.left = `${touch.clientX - 25}px`;
-    bubble.style.top = `${touch.clientY - 25}px`;
+    touchData.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+    };
+    bubbleRef.current.dataset.dragging = "true";
+    bubbleRef.current.style.zIndex = 50; // biar muncul di atas pas di-drag
 
     if (onDragStart) onDragStart(e, wordData.id);
   };
 
   const handleTouchMove = (e) => {
-    if (!isTouchDragging.current) return;
+    if (!bubbleRef.current.dataset.dragging) return;
     const touch = e.touches[0];
     const bubble = bubbleRef.current;
 
-    e.preventDefault(); // blok scroll browser
+    // 🧩 biar posisi bubble ngikut jari dengan halus
     bubble.style.left = `${touch.clientX - 25}px`;
     bubble.style.top = `${touch.clientY - 25}px`;
   };
 
   const handleTouchEnd = (e) => {
-    if (!isTouchDragging.current) return;
-    isTouchDragging.current = false;
-
-    const bubble = bubbleRef.current;
-    bubble.style.zIndex = 30;
-    bubble.style.position = "absolute";
+    bubbleRef.current.dataset.dragging = "";
+    bubbleRef.current.style.zIndex = 20; // balikin z-index biar normal lagi
 
     const touch = e.changedTouches[0];
-    const dropEl = document.elementFromPoint(touch.clientX, touch.clientY);
+    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
 
-    const frogTarget = dropEl?.id === "frog-target"
-      ? dropEl
-      : dropEl?.closest?.("#frog-target");
-
-    if (frogTarget) {
-      frogTarget.dispatchEvent(
-        new CustomEvent("manualDrop", {
-          detail: { wordId: wordData.id }
-        })
-      );
+    // 🎯 kalau dilepas di atas WG_FrogTarget → trigger drop
+    if (dropTarget && dropTarget.id === "frog-target") {
+      const fakeEvent = {
+        preventDefault: () => {},
+        dataTransfer: {
+          getData: () => String(wordData.id),
+        },
+      };
+      dropTarget.dispatchEvent(new CustomEvent("manualDrop", { detail: fakeEvent }));
     }
   };
 

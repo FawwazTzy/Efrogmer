@@ -22,25 +22,30 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
   const playSound = (type) => {
     const audio = type === "correct" ? correctRef.current : wrongRef.current;
     if (audio) {
+      // 🔊 Reset & Play
       audio.currentTime = 0;
       audio.play().catch(() => {});
     }
   };
 
-  // 🐸 Listen global frogReaction event (dipanggil dari GameTimeMode)
+  // 🐸 Tangkap event global dari GameTimeMode
   useEffect(() => {
     const handleFrogReaction = (e) => {
       const result = e.detail;
-      if (result === "correct") triggerEat();
-      if (result === "wrong") triggerWrong();
+      if (result === "correct") {
+        triggerEat();
+      } else if (result === "wrong") {
+        triggerWrong();
+      }
     };
+
     window.addEventListener("frogReaction", handleFrogReaction);
     return () => window.removeEventListener("frogReaction", handleFrogReaction);
   }, []);
 
   const triggerEat = () => {
     setAnimState("eat");
-    setIcon("😋");
+    setIcon("✅");
     playSound("correct");
     setTimeout(() => {
       setAnimState("idle");
@@ -50,7 +55,7 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
 
   const triggerWrong = () => {
     setAnimState("wrong");
-    setIcon("💢");
+    setIcon("❌");
     playSound("wrong");
     setTimeout(() => {
       setAnimState("idle");
@@ -63,26 +68,6 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
   if (animState === "eat") animClass = "animate-frogEat";
   else if (animState === "wrong") animClass = "animate-shake text-red-600";
 
-  // 📱 Support HP Drop (dari WordBubble TouchDrop event)
-  useEffect(() => {
-    const handleTouchDrop = (e) => {
-      const { x, y, wordId } = e.detail;
-      const frog = targetRef.current;
-      if (!frog) return;
-
-      const rect = frog.getBoundingClientRect();
-      const inside =
-        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-
-      if (inside && onDrop) {
-        onDrop({ preventDefault: () => {}, dataTransfer: { getData: () => wordId } });
-      }
-    };
-
-    window.addEventListener("frogTouchDrop", handleTouchDrop);
-    return () => window.removeEventListener("frogTouchDrop", handleTouchDrop);
-  }, [onDrop]);
-
   return (
     <div
       ref={targetRef}
@@ -90,17 +75,16 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
       onDrop={onDrop}
       onDragOver={(e) => {
         e.preventDefault();
-        onDragOver && onDragOver(e);
+        if (onDragOver) onDragOver(e);
       }}
       className="
         relative z-20
-        w-full max-w-[180px] md:max-w-[240px]
-        mx-auto mt-1
-        rounded-md p-1 md:p-2 flex flex-col items-center justify-center
+        w-full max-w-[180px] sm:max-w-[180px] md:max-w-[280px] mx-auto mt-1
+        rounded-md p-1 sm:p-1 md:p-2 flex flex-col items-center justify-center
         bg-gradient-to-t from-yellow-200 to-emerald-400 shadow-inner
         transition-all duration-300
       "
-      style={{ minHeight: 65 }}
+      style={{ minHeight: 60 }}
     >
       {/* 🐸 Icon Kodok */}
       <div
@@ -110,11 +94,10 @@ const WG_FrogTarget = ({ onDrop, onDragOver, label }) => {
       </div>
 
       {/* Label */}
-      <div className="mt-1 text-[9px] md:text-[11px] font-bold text-slate-900 text-center">
+      <div className="mt-0.5 text-[9px] sm:text-[9px] md:text-[9px] font-bold text-slate-900 text-center">
         Feed me: <span className="capitalize">{label}</span>
       </div>
-
-      <div className="text-[7px] md:text-[9px] text-slate-700 text-center">
+      <div className="mt-0.25 text-[7px] sm:text-[7px] md:text-[9px] text-slate-700 text-center">
         Drag words here
       </div>
     </div>

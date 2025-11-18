@@ -5,7 +5,13 @@ import LEVELS from "../../Data/Question";
 export default function LevelIntro() {
   const { levelId } = useParams();
   const navigate = useNavigate();
+
   const level = LEVELS.find((lvl) => lvl.id === parseInt(levelId));
+
+  const progress = JSON.parse(localStorage.getItem(`level_${levelId}`)) || { 
+    score: 0, 
+    stars: 0 
+  };
 
   if (!level) {
     return (
@@ -47,11 +53,11 @@ export default function LevelIntro() {
             bg-cover bg-center border border-white/10 shadow-md" />
 
           {/* Rewards */}
-          <div className="mt-4 flex gap-2">
-            <div className="w-4 h-4 rounded-sm bg-yellow-300" />
-            <div className="w-4 h-4 rounded-sm bg-yellow-300" />
-            <div className="w-4 h-4 rounded-sm bg-yellow-300" />
-          </div>
+          <p className="absolute font-poppins bg-slate-200 p-4 bottom-16 w-full text-center text-gray-900 font-semibold text-sm z-[20]">
+            ⭐ {progress.stars}
+            <br />
+            Score: <span className="text-blue-600">{progress.score}</span>
+          </p>
         </div>
 
         {/* 🟩 PANEL KANAN */}
@@ -60,10 +66,10 @@ export default function LevelIntro() {
           bg-cover bg-center border border-white/20 backdrop-blur-lg shadow-xl">
 
           {/* TITLE */}
-          <h1 className="text-xl sm:text-2xl font-poppins font-semibold text-emerald-200 drop-shadow-sm">
+          <h1 className="text-xl sm:text-2xl font-poppins font-semibold text-emerald-900 drop-shadow-sm">
             Level {level.id}
           </h1>
-          <p className="text-sm sm:text-base mt-0.5 font-poppins text-emerald-300 capitalize">
+          <p className="text-sm sm:text-base mt-0.5 font-poppins text-emerald-900 capitalize">
             {level.targetPos}
           </p>
 

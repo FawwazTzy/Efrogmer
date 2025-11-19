@@ -9,7 +9,8 @@ import WG_Words from "./Data2/WG_Words";
 import WG_Notification from "./components2/WG_Notification";
 import WG_SidePanel from "./components2/WG_SidePanel";
 
-const POS_LIST = ["adjective", "adverb", "noun", "verb", "proper noun", "pronoun"];
+const POS_LIST =
+["adjective", "adverb", "noun", "verb", "pronoun", "preposition", "conjuction", "interjection", "determiner"];
 
 // 🧩 Posisi acak disesuaikan layar (versi manual full control)
 const applyPositions = (words) => {
@@ -100,10 +101,11 @@ const GameTimeMode = () => {
   }, [timeLeft, lives, score]);
 
   // 🎯 Target baru
-  const pickNextTarget = () => {
-    const candidates = POS_LIST.filter((p) => p !== targetPos);
-    return candidates[Math.floor(Math.random() * candidates.length)];
-  };
+const pickNextTarget = () => {
+  const currentIndex = POS_LIST.indexOf(targetPos);
+  const nextIndex = (currentIndex + 1) % POS_LIST.length; 
+  return POS_LIST[nextIndex];
+};
 
   // 🐸 DROP HANDLER
   const handleDrop = (e) => {

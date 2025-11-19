@@ -62,7 +62,7 @@ const WG_WordBubble = ({ wordData, style = {}, onDragStart, isDragging }) => {
       onTouchEnd={handleTouchEnd}
       className={`absolute select-none
         px-2 py-1 sm:px-3 sm:py-1.5 md:px-2 md:py-3
-        rounded-full font-poppins
+        rounded-lg font-poppins
         text-[9px] sm:text-xs md:text-[15px]
         cursor-grab transition-all duration-200 ease-in-out
         shadow-[0_1px_4px_rgba(0,0,0,0.2)]

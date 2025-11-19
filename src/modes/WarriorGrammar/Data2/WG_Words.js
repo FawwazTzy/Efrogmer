@@ -34,7 +34,7 @@ const WG_Words = [
   { id: 29, word: "Write", pos: "verb", top: 400, left: 670 },
   { id: 30, word: "Study", pos: "verb", top: 190, left: 400 },
 // Pronoun 5
-  { id: 31, word: "They", pos: "pronoun", top: 25, left: 600 },
+  { id: 31, word: "They", pos: "pronoun", top: 25, left: 580 },
   { id: 32, word: "We", pos: "pronoun", top: 80, left: 720 },
   { id: 33, word: "He", pos: "pronoun", top: 240, left: 280 },
   { id: 34, word: "She", pos: "pronoun", top: 230, left: 590 },
@@ -58,11 +58,11 @@ const WG_Words = [
   { id: 49, word: "Wow!", pos: "interjection", top: 110, left: 90 },
   { id: 50, word: "Ooh", pos: "interjection", top: 200, left: 320 },
   { id: 51, word: "Ouch", pos: "interjection", top: 170, left: 350 },
-  { id: 52, word: "Aha", pos: "interjection", top: 340, left: 990 },
+  { id: 52, word: "Aha", pos: "interjection", top: 180, left: 900 },
   { id: 53, word: "Yayy", pos: "interjection", top: 220, left: 460 },
   { id: 54, word: "Oops", pos: "interjection", top: 340, left: 390 },
 // Determiner
-  { id: 55, word: "Several", pos: "determiner", top: 30, left: 670 },
+  { id: 55, word: "Several", pos: "determiner", top: 30, left: 640 },
   { id: 56, word: "This", pos: "determiner", top: 215, left: 550 },
   { id: 57, word: "Those", pos: "determiner", top: 145, left: 530 },
   { id: 58, word: "Each", pos: "determiner", top: 140, left: 300 },

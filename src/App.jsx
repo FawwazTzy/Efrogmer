@@ -15,6 +15,7 @@ import Mode from "./Pages/Mode";
 import Game from "./Pages/Game";
 import LevelIntro from "./Pages/LevelIntro";
 import GameTimeMode from "./modes/WarriorGrammar/GameTimeMode";
+import GameTimeMode3 from "./advance/WarriorGrammar3/GameTimeMode3";
 import Material from "./Pages/Material";
 import Preparation from "./modes/WarriorGrammar/Preparation";
 //
@@ -69,6 +70,7 @@ const App = () => {
 
           {/* grammar Warrior */}
           <Route path="/grammarpage" element={<GameTimeMode />} />
+          <Route path="/advance" element={<GameTimeMode3 />} />
           <Route path="/preparation" element={<Preparation />} />
           
           {/* Intro per level */}

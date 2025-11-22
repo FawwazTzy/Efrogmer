@@ -1,0 +1,73 @@
+const WG_Words3 = [
+  // Adjective 1
+  { id: 1, word: "Angry", pos: "adjective", top: 89, left: 550 },
+  { id: 2, word: "Quiet", pos: "adjective", top: 210, left: 50 },
+  { id: 3, word: "Famous", pos: "adjective", top: 130, left: 350 },
+  { id: 4, word: "Nervous", pos: "adjective", top: 360, left: 260 },
+  { id: 5, word: "Narrow", pos: "adjective", top: 40, left: 520 },
+  { id: 6, word: "Busy", pos: "adjective", top: 160, left: 250 },
+  { id: 7, word: "Kind", pos: "adjective",  top: 120, left: 480 },
+  { id: 8, word: "Talktive", pos: "adjective", top: 60, left: 260 },
+  { id: 9, word: "Vague", pos: "adjective", top: 430, left: 330 },
+  // Adverb 2
+  { id: 10, word: "Energetically", pos: "adverb", top: 290, left: 430 },
+  { id: 11, word: "Quickly", pos: "adverb", top: 90, left: 620 },
+  { id: 12, word: "Firmly", pos: "adverb", top: 230, left: 840 },
+  { id: 13, word: "Slowly", pos: "adverb", top: 40, left: 320 },
+  { id: 14, word: "Happily", pos: "adverb", top: 80, left: 460 },
+  { id: 15, word: "Boldly", pos: "adverb", top: 240, left: 340 },
+  { id: 16, word: "Rapidly", pos: "adverb", top: 420, left: 540 },
+  { id: 17, word: "Cheerfully", pos: "adverb", top: 200, left: 650 },
+  { id: 18, word: "Neatly", pos: "adverb", top: 120, left: 710 },
+// Noun 3
+  { id: 19, word: "Camera", pos: "noun", top: 240, left: 640 },
+  { id: 20, word: "Garden", pos: "noun", top: 40, left: 385 },
+  { id: 21, word: "Book", pos: "noun", top: 110, left: 260 },
+  { id: 22, word: "Flower", pos: "noun", top: 310, left: 620 },
+  { id: 23, word: "Village", pos: "noun", top: 135, left: 590 },
+  { id: 24, word: "Hoe", pos: "noun", top: 180, left: 200 },
+// Verb 4
+  { id: 25, word: "Laugh", pos: "verb", top: 30, left: 840 },
+  { id: 26, word: "Travel", pos: "verb", top: 130, left: 415 },
+  { id: 27, word: "Conduct", pos: "verb", top: 235, left: 395 },
+  { id: 28, word: "Kick", pos: "verb", top: 210, left: 235 },
+  { id: 29, word: "Tell", pos: "verb", top: 220, left: 510 },
+  { id: 30, word: "Arrange", pos: "verb", top: 190, left: 390 },
+// Pronoun 5
+  { id: 31, word: "Them", pos: "pronoun", top: 25, left: 580 },
+  { id: 32, word: "Myself", pos: "pronoun", top: 80, left: 720 },
+  { id: 33, word: "His", pos: "pronoun", top: 200, left: 275 },
+  { id: 34, word: "Ourselves", pos: "pronoun", top: 230, left: 570 },
+  { id: 35, word: "Hers", pos: "pronoun", top: 180, left: 490 },
+  { id: 36, word: "You", pos: "pronoun", top: 150, left: 770 },
+// Preposition
+  { id: 37, word: "Across", pos: "preposition", top: 430, left: 200 },
+  { id: 38, word: "Along", pos: "preposition", top: 100, left: 190 },
+  { id: 39, word: "Behind", pos: "preposition", top: 180, left: 575 },
+  { id: 40, word: "Beneath", pos: "preposition", top: 260, left: 1000 },
+  { id: 41, word: "Under", pos: "preposition", top: 160, left: 650 },
+  { id: 42, word: "Through", pos: "preposition", top: 300, left: 80 },
+// Conjuction
+  { id: 43, word: "However", pos: "conjuction", top: 40, left: 100 },
+  { id: 44, word: "Therefore", pos: "conjuction", top: 400, left: 670 },
+  { id: 45, word: "When", pos: "conjuction", top: 93, left: 400 },
+  { id: 46, word: "After", pos: "conjuction", top: 140, left: 180 },
+  { id: 47, word: "Eventhough", pos: "conjuction", top: 280, left: 270 },
+  { id: 48, word: "Unless", pos: "conjuction", top: 170, left: 70 },
+// Interjection
+  { id: 49, word: "Hey!", pos: "interjection", top: 110, left: 90 },
+  { id: 50, word: "Oh-uh", pos: "interjection", top: 185, left: 320 },
+  { id: 51, word: "Hooray!", pos: "interjection", top: 220, left: 180 },
+  { id: 52, word: "Eew!", pos: "interjection", top: 180, left: 900 },
+  { id: 53, word: "Nahh..", pos: "interjection", top: 230, left: 460 },
+  { id: 54, word: "Phew!", pos: "interjection", top: 340, left: 390 },
+// Determiner
+  { id: 55, word: "Another", pos: "determiner", top: 30, left: 640 },
+  { id: 56, word: "Few", pos: "determiner", top: 180, left: 445 },
+  { id: 57, word: "Either", pos: "determiner", top: 142, left: 530 },
+  { id: 58, word: "Each", pos: "determiner", top: 140, left: 300 },
+  { id: 59, word: "Neither", pos: "determiner", top: 90, left: 340 },
+  { id: 60, word: "Many", pos: "determiner", top: 50, left: 185 },
+];
+
+export default WG_Words3;

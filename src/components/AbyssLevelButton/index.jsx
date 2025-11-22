@@ -38,7 +38,9 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
       {/* Score & Stars */}
       {unlocked && (
         <p className="absolute bottom-16 w-full text-center text-gray-900 font-semibold text-xs z-[20]">
-          ⭐ {progress.stars}
+          <span>{progress.stars >= 1 ? "⭐" : "☆"}</span>
+          <span>{progress.stars >= 2 ? "⭐" : "☆"}</span>
+          <span>{progress.stars >= 3 ? "⭐" : "☆"}</span>
           <br />
           Score: <span className="text-blue-600">{progress.score}</span>
         </p>

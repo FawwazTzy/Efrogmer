@@ -146,6 +146,15 @@ const Preparation = () => {
             >
             Play Now!
           </motion.button>
+
+           <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/advance")}
+              className="bg-red-600 w-full font-poppins text-white font-semibold rounded-lg px-20 py-8 shadow-md hover:bg-red-900 transition-all duration-150 text-lg"
+            >
+            Play Now!
+          </motion.button>
         </section>
       </div>
       <Comment/>

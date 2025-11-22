@@ -69,7 +69,6 @@ const Mode = () => {
               </motion.button>
             </div>
           </motion.div>
-
         </div>
       </div>
     </div>

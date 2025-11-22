@@ -1,0 +1,263 @@
+// src/modes/WarriorGrammar/GameTimeMode.jsx
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
+import WG_HUD3 from "./components3/WG_HUD3";
+import WG_WordBubble3 from "./components3/WG_WordBubble3";
+import WG_WinModal3 from "./components3/WG_WinModal3";
+import WG_Words3 from "./Data3/WG_Words3";
+import WG_Notification3 from "./components3/WG_Notification3";
+import WG_SidePanel3 from "./components3/WG_SidePanel3";
+
+const POS_LIST3 =
+["adjective", "adverb", "noun", "verb", "pronoun", "preposition", "conjuction", "interjection", "determiner"];
+
+// 🧩 Posisi acak disesuaikan layar (versi manual full control)
+const applyPositions = (words) => {
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const isMobile = screenWidth < 700;
+  const isLaptop = screenWidth >= 768 && screenWidth < 1440;
+
+  // 🎛️ Konfigurasi utama (ubah ini sesuka kamu)
+  const config = {
+    scaleX: 1,  // skala lebar (1 = normal, <1 = lebih rapat, >1 = lebih lebar)
+    scaleY: 1,  // skala tinggi
+    offsetX: -80, // geser horizontal (positif = kanan, negatif = kiri)
+    offsetY: 0, // geser vertikal (positif = bawah, negatif = atas)
+
+    // 🔒 Batas aman biar kata gak keluar dari frame
+    safeArea: {
+      left: 40,    // jarak aman dari kiri
+      right: 190,   // jarak aman dari kanan
+      top: 50,     // jarak aman dari atas
+      bottom: 65, // jarak aman dari bawah
+    },
+  };
+
+  return words.map((w) => {
+    // posisi acak dalam persentase
+    let left = w.left ?? Math.floor(6 + Math.random() * 88);
+    let top = w.top ?? Math.floor(6 + Math.random() * 70);
+
+    // ubah ke posisi pixel & terapkan skala + offset
+    left = left * config.scaleX + config.offsetX;
+    top = top * config.scaleY + config.offsetY;
+
+    // 🚫 Batasi agar tidak keluar area aman
+    left = Math.max(config.safeArea.left, Math.min(left, screenWidth - config.safeArea.right));
+    top = Math.max(config.safeArea.top, Math.min(top, screenHeight - config.safeArea.bottom));
+
+    return {
+      ...w,
+      style: { left: `${left}px`, top: `${top}px` },
+    };
+  });
+};
+
+// ⭐ Hitung bintang
+const calcStars = (score, targetScore) => {
+  const ratio = score / targetScore;
+  if (ratio >= 1) return 3;
+  if (ratio >= 0.66) return 2;
+  if (ratio >= 0.33) return 1;
+  return 0;
+};
+
+const GameTimeMode3 = () => {
+  const navigate = useNavigate();
+  const timeLimit = 180;
+  const targetScore = 60;
+  const initialLives = 5;
+  const correctChangeThreshold = 3;
+
+  const [timeLeft, setTimeLeft] = useState(timeLimit);
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(initialLives);
+  const [words, setWords] = useState(applyPositions(WG_Words3));
+  const [targetPos, setTargetPos] = useState("adjective");
+  const [correctSinceChange, setCorrectSinceChange] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [stars, setStars] = useState(0);
+  const [showNotif, setShowNotif] = useState(false);
+  const [notifFromRight, setNotifFromRight] = useState(true);
+  const [showTimeBonus, setShowTimeBonus] = useState(false);
+
+  const timerRef = useRef(null);
+
+  // 🕒 Timer jalan terus
+  useEffect(() => {
+    timerRef.current = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  // 🏁 Selesai
+  useEffect(() => {
+    if (timeLeft <= 0 || lives <= 0 || score >= targetScore) {
+      clearInterval(timerRef.current);
+      const earned = calcStars(score, targetScore);
+      setStars(earned);
+      setShowModal(true);
+    }
+  }, [timeLeft, lives, score]);
+
+  // 🎯 Target baru
+const pickNextTarget = () => {
+  const currentIndex = POS_LIST3.indexOf(targetPos);
+  const nextIndex = (currentIndex + 1) % POS_LIST3.length; 
+  return POS_LIST3[nextIndex];
+};
+
+  // 🐸 DROP HANDLER
+  const handleDrop = (e) => {
+    e.preventDefault();
+    if (timeLeft <= 0 || lives <= 0) return;
+
+    const id = parseInt(e.dataTransfer.getData("text/plain"));
+    const dropped = words.find((w) => w.id === id);
+    if (!dropped) return;
+
+    // hapus kata dari area
+    setWords((prev) => prev.filter((w) => w.id !== id));
+
+    // cek benar/salah
+    if (dropped.pos === targetPos) {
+    setScore((s) => s + 1);
+
+    // ⭐ Tambah waktu
+    setTimeLeft((t) => t + 3);
+
+    // ⭐ Tampilkan notif +3s
+    setShowTimeBonus(true);
+    setTimeout(() => setShowTimeBonus(false), 9000);
+
+    window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" }));
+
+    setCorrectSinceChange((c) => {
+        const now = c + 1;
+        if (now >= correctChangeThreshold) {
+        const nextTarget = pickNextTarget();
+        setTargetPos(nextTarget);
+        setNotifFromRight((prev) => !prev);
+        setShowNotif(true);
+        setTimeout(() => setShowNotif(false), 3000);
+        return 0;
+        }
+        return now;
+    });
+
+    } else {
+      setLives((l) => Math.max(0, l - 1));
+      window.dispatchEvent(new CustomEvent("frogReaction", { detail: "wrong" }));
+    }
+  };
+
+  const handleDragOver = (e) => e.preventDefault();
+
+  // 🔄 Restart
+  const handleCloseModal = () => {
+    setTimeLeft(timeLimit);
+    setScore(0);
+    setLives(initialLives);
+    setWords(applyPositions(WG_Words3));
+    setTargetPos("adjective");
+    setCorrectSinceChange(0);
+    setShowModal(false);
+    setStars(0);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+  };
+
+  // 📱 Orientasi (kalau portrait, tampil overlay)
+  const [isPortrait, setIsPortrait] = useState(false);
+  useEffect(() => {
+    const checkOrientation = () => setIsPortrait(window.innerHeight > window.innerWidth);
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    return () => window.removeEventListener("resize", checkOrientation);
+  }, []);
+
+  // 🧩 Tambahan: Re-apply posisi kata ketika ukuran layar berubah
+  useEffect(() => {
+    const handleResize = () => setWords((prev) => applyPositions(prev));
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
+
+  return (
+    <div className="h-screen w-screen bg-yellow-900 text-white p-2 sm:p-4 overflow-hidden relative">
+      {isPortrait && (
+        <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-6">
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">
+            Please Rotate Your Device!
+          </h2>
+          <p className="text-sm sm:text-lg">This game works best in landscape mode.</p>
+        </div>
+      )}
+
+      <WG_HUD3
+        timeLeft={Math.max(0, timeLeft)}
+        score={score}
+        targetScore={targetScore}
+        lives={lives}
+        targetPos={targetPos}
+        showTimeBonus={showTimeBonus}
+        />
+
+      <div className="flex flex-col sm:flex-row gap-3 mx-auto h-[83vh] w-full max-w-[1500px]">
+        {/* 🎮 AREA GAME */}
+        <div className="w-full sm:w-[200%] relative bg-[url('https://i.pinimg.com/1200x/dc/85/65/dc8565e186c57e854aa6ee939126ffb1.jpg')] bg-cover bg-center bg-no-repeat rounded-lg overflow-hidden p-2 sm:p-4">
+          {words.map((w) => (
+            <WG_WordBubble3
+              key={w.id}
+              wordData={w}
+              onDragStart={(e) => e.dataTransfer.setData("text/plain", w.id)}
+              style={{
+                position: "absolute",
+                ...w.style,
+                transform: "translate(-50%, -130%)",
+                zIndex: 20,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* 🐸 PANEL SAMPING */}
+        <div className="w-full sm:w-[15%] mt-2 sm:mt-0 h-auto">
+          <WG_SidePanel3
+            targetPos={targetPos}
+            correctSinceChange={correctSinceChange}
+            correctChangeThreshold={correctChangeThreshold}
+            wordsLeft={words.length}
+            targetScore={targetScore}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onRestart={handleCloseModal}
+            onBack={() => navigate(-1)}
+          />
+        </div>
+      </div>
+
+      <WG_Notification3
+        show={showNotif}
+        fromRight={notifFromRight}
+        text={`New Target: ${targetPos.toUpperCase()}!`}
+      />
+
+      <WG_WinModal3
+        open={showModal}
+        onClose={handleCloseModal}
+        score={score}
+        targetScore={targetScore}
+        timeLeft={Math.max(0, timeLeft)}
+        stars={stars}
+      />
+    </div>
+  );
+};
+
+export default GameTimeMode3;

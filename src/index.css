@@ -127,3 +127,21 @@
     animation: frogEat 0.5s ease-in-out;
   }
 }
+@keyframes ping-fast {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.9);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(1.1);
+  }
+}
+
+.animate-ping-fast {
+  animation: ping-fast 0.7s ease-out forwards;
+}

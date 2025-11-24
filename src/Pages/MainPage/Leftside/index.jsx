@@ -8,18 +8,15 @@ const Leftside = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="
-        h-[100vh] w-full 
-        flex flex-col justify-between
-        overflow-hidden
-        px-4 py-2
-        sm:px-[120px] sm:py-3
-        bg-[url('https://i.pinimg.com/1200x/1c/d8/24/1cd824ccf720fd694c6884b7a6396109.jpg')]
-        text-[#001e1d] bg-cover bg-center
-      "
-    >
-      {/* JUDUL */}
+    <div className="
+  min-h-[100dvh]
+  w-full flex flex-col justify-between
+  px-4 py-2
+  sm:px-[120px] sm:py-3
+  bg-[url('https://i.pinimg.com/1200x/1c/d8/24/1cd824ccf720fd694c6884b7a6396109.jpg')]
+  text-[#001e1d] bg-cover bg-center
+">
+
       <motion.h1
         className="
           text-xl xs:text-2xl sm:text-4xl mb-1 

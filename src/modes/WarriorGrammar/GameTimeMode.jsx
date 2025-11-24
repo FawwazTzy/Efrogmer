@@ -2,6 +2,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { auth, db } from "../../firebase"; 
+import { doc, setDoc } from "firebase/firestore";
+import useAuth from "../../hooks/useAuth";
+
 import WG_HUD from "./components2/WG_HUD";
 import WG_WordBubble from "./components2/WG_WordBubble";
 import WG_WinModal from "./components2/WG_WinModal";
@@ -84,6 +88,29 @@ const GameTimeMode = () => {
 
   const timerRef = useRef(null);
 
+   const saveScoreToFirebase = async (user, score, targetScore, timeLeft, stars) => {
+    try {
+      await setDoc(
+        doc(db, "scores", user.uid),
+        {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          score,
+          targetScore,
+          timeLeft,
+          stars,
+          timestamp: new Date(),
+        },
+        { merge: true }
+      );
+
+       console.log("SCORE SAVED!");
+  } catch (err) {
+    console.error("ERROR SAVE:", err);
+  }
+};
+
   // 🕒 Timer jalan terus
   useEffect(() => {
     timerRef.current = setInterval(() => setTimeLeft((t) => t - 1), 1000);
@@ -97,6 +124,10 @@ const GameTimeMode = () => {
       const earned = calcStars(score, targetScore);
       setStars(earned);
       setShowModal(true);
+      const user = auth.currentUser;
+      if (user) {
+      saveScoreToFirebase(user, score, targetScore, timeLeft, earned);
+      } // 🔥 SIMPAN KE FIREBASE
     }
   }, [timeLeft, lives, score]);
 

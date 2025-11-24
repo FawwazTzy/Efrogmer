@@ -18,6 +18,7 @@ import GameTimeMode from "./modes/WarriorGrammar/GameTimeMode";
 import GameTimeMode3 from "./advance/WarriorGrammar3/GameTimeMode3";
 import Material from "./Pages/Material";
 import Preparation from "./modes/WarriorGrammar/Preparation";
+import Login from "./Pages/Login";
 //
 import RotateOverlay from "./components/RotateOverlay";
 
@@ -62,7 +63,8 @@ const App = () => {
 
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/mainpage" replace />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/mainpage" element={<MainPage />} />
           <Route path="/mappage" element={<MapPage />} />
           <Route path="/mode" element={<Mode />} />

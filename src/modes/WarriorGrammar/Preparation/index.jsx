@@ -5,7 +5,8 @@ import Eg1 from "../../Fawwaz.Allrightreserved/English1.png"
 import Eg2 from "../../Fawwaz.Allrightreserved/English2.png";
 import Eg3 from "../../Fawwaz.Allrightreserved/English3.png";
 import Gavocab from "../../../../public/Efrogmer1.jpeg";
-import Comment from "../components2/Comment";
+import Leaderboard3 from "../../../advance/WarriorGrammar3/components3/Leaderboard3";
+import Footer3 from "../../../advance/WarriorGrammar3/components3/Footer3";
 
 const Preparation = () => {
   const [currentBg, setCurrentBg] = useState(0);
@@ -157,7 +158,12 @@ const Preparation = () => {
           </motion.button>
         </section>
       </div>
-      <Comment/>
+            <div>
+              <Leaderboard3 />
+          </div>
+            <div>
+              <Footer3 />
+          </div>
     </div>
   );
 };

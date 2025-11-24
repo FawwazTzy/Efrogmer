@@ -1,6 +1,6 @@
 // src/modes/WarriorGrammar/components/WG_WinModal.jsx
 import React from "react";
-import { useNavigate } from "react-router-dom"; // 🔥 penting agar tombol Exit berfungsi
+import { useNavigate } from "react-router-dom";
 
 /**
  * Props:
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"; // 🔥 penting agar tombol Exit
  * - stars: number (0-3)
  */
 const WG_WinModal3 = ({ open, onClose, score, targetScore, timeLeft, stars = 0 }) => {
-  const navigate = useNavigate(); // 🔥 digunakan untuk navigasi halaman
+  const navigate = useNavigate();
 
   if (!open) return null;
 

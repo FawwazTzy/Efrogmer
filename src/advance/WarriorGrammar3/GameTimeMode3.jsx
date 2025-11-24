@@ -9,6 +9,7 @@ import WG_Words3 from "./Data3/WG_Words3";
 import WG_Notification3 from "./components3/WG_Notification3";
 import WG_SidePanel3 from "./components3/WG_SidePanel3";
 
+
 const POS_LIST3 =
 ["adjective", "adverb", "noun", "verb", "pronoun", "preposition", "conjuction", "interjection", "determiner"];
 
@@ -92,13 +93,13 @@ const GameTimeMode3 = () => {
   }, []);
 
   // 🏁 Selesai
-  useEffect(() => {
-    if (timeLeft <= 0 || lives <= 0 || score >= targetScore) {
-      clearInterval(timerRef.current);
-      const earned = calcStars(score, targetScore);
-      setStars(earned);
-      setShowModal(true);
-    }
+    useEffect(() => {
+        if (timeLeft <= 0 || lives <= 0 || score >= targetScore) {
+    clearInterval(timerRef.current);
+    const earned = calcStars(score, targetScore);
+    setStars(earned);
+    setShowModal(true);
+}
   }, [timeLeft, lives, score]);
 
   // 🎯 Target baru
@@ -129,7 +130,7 @@ const pickNextTarget = () => {
 
     // ⭐ Tampilkan notif +3s
     setShowTimeBonus(true);
-    setTimeout(() => setShowTimeBonus(false), 9000);
+    setTimeout(() => setShowTimeBonus(false), 1000);
 
     window.dispatchEvent(new CustomEvent("frogReaction", { detail: "correct" }));
 

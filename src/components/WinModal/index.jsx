@@ -55,7 +55,7 @@ function WinModal({ stars, score, targetScore, moves, totalMoves, currentLevel, 
             Back to Map 🗺️
           </button>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/mode")}
             className="bg-gray-600 font-poppins text-white px-5 py-2 rounded-lg hover:bg-gray-700 transition shadow"
           >
             Back to Menu 🏠

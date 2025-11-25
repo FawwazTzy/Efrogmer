@@ -92,7 +92,7 @@ const Footer3 = () => {
 
         {/* Social Media */}
         <div>
-          <h3 className="text-lg font-medium text-white mb-3">Follow Us</h3>
+          <h3 className="text-lg font-medium text-white mb-3">Follow Me</h3>
           <div className="flex gap-4">
             <a href="https://www.facebook.com/share/1AWiLny9WZ/" className="hover:text-white"><Facebook size={22} /></a>
             <a href="https://www.instagram.com/bethoooven55?igsh=MThkYzIzdWI0bWI3OQ==" className="hover:text-white"><Instagram size={22} /></a>

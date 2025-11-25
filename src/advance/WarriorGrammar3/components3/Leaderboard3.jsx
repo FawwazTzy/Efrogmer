@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import bg1 from "../../../assets/user.png"
 
 const Leaderboard = () => {
   const [players, setPlayers] = useState([]);
@@ -26,12 +27,12 @@ const Leaderboard = () => {
     <div className="p-6 mt-20 py-10 bg-slate-500">
       <h2 className="text-3xl font-bold mb-4 text-center">Leaderboard</h2>
 
-      <table className="table-auto w-full border-collapse bg-white shadow-lg rounded-xl overflow-hidden">
+      <table className="table-auto w-full border-collapse border-black bg-white shadow-lg rounded-xl overflow-hidden">
         <thead className="bg-blue-600 text-white">
           <tr>
-            <th className="p-3">Rank</th>
-            <th className="p-3">Player</th>
-            <th className="p-3">Score</th>
+            <th className="p-3 font-poppins">Rank</th>
+            <th className="p-3 font-poppins">Player</th>
+            <th className="p-3 font-poppins">Score</th>
           </tr>
         </thead>
 
@@ -42,7 +43,7 @@ const Leaderboard = () => {
 
               <td className="flex items-center gap-3 p-3">
                 <img
-                  src={p.photoUrl || "https://i.ibb.co/ZH8Fjpv/user.png"}
+                  src={bg1}
                   alt="avatar"
                   className="w-10 h-10 rounded-full object-cover"
                 />

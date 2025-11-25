@@ -148,7 +148,26 @@ function Game() {
     }
   }, [moves, lives, words.length, score, initialized, targetScore, currentLevel]);
 
+  // 📱 Orientasi (kalau portrait, tampil overlay)
+    const [isPortrait, setIsPortrait] = useState(false);
+    useEffect(() => {
+      const checkOrientation = () => setIsPortrait(window.innerHeight > window.innerWidth);
+      checkOrientation();
+      window.addEventListener("resize", checkOrientation);
+      return () => window.removeEventListener("resize", checkOrientation);
+    }, []);
+
   return (
+    <div className="h-screen w-screen bg-yellow-900 text-white p-2 sm:p-4 overflow-hidden relative">
+      {isPortrait && (
+        <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-6">
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">
+            Please Rotate Your Device!
+          </h2>
+          <p className="text-sm sm:text-lg">This game works best in landscape mode.</p>
+        </div>
+      )}
+
     <div className="flex flex-col min-h-screen bg-emerald-900 bg-center bg-cover bg-no-repeat relative">
       {/* GRID LINES */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:20px_20px]" />
@@ -207,6 +226,7 @@ function Game() {
         />
       )}
     </div>
+  </div>
   );
 }
 

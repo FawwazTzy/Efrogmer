@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AbyssLevelButton from "../../components/AbyssLevelButton";
 import Levelup from "../../assets/Levelup.png";
@@ -20,10 +20,36 @@ const levels = [
 export default function MapPage() {
   const navigate = useNavigate();
 
-  return (
-    <div className="min-h-screen flex flex-col items-center bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')] bg-cover text-white relative">
+  // FIX: Hooks must be inside the component function
+  const [isPortrait, setIsPortrait] = useState(false);
 
-      {/*Top UI*/}
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsPortrait(window.innerHeight > window.innerWidth);
+    };
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    return () => window.removeEventListener("resize", checkOrientation);
+  }, []);
+
+  return (
+    <div className="h-screen w-screen bg-yellow-900 text-white p-2 sm:p-4 overflow-hidden relative">
+      {/* Orientation Warning */}
+      {isPortrait && (
+        <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-6">
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">
+            Please Rotate Your Device!
+          </h2>
+          <p className="text-sm sm:text-lg">
+            This game works best in landscape mode.
+          </p>
+        </div>
+      )}
+
+      {/* Main Background */}
+      <div className="min-h-screen flex flex-col items-center bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')] bg-cover text-white relative">
+
+        {/* Top UI */}
         <div className="w-full bg-emerald-900 px-3 py-2 sm:px-4 sm:py-3 flex items-center justify-between text-xs xs:text-sm sm:text-base md:text-lg">
 
           {/* Left Title */}
@@ -38,33 +64,29 @@ export default function MapPage() {
             />
           </div>
 
-          {/* Right Icon / Profile */}
+          {/* Right Profile Icon */}
           <motion.img
             src={gavocabicon}
-            alt="funny gif"
-            className="rounded-full object-cover bg-no-repeat bg-center bg-cover
-              shadow-[0_0_6px_1px_rgba(255,0,0,0.6),
-                      0_0_8px_2px_rgba(0,255,0,0.6),
-                      0_0_10px_3px_rgba(0,0,255,0.6),
-                      0_0_12px_4px_rgba(255,0,255,0.6)]
-              animate-[glow_3s_ease-in-out_infinite]
-              h-[clamp(38px,6vw,64px)] w-[clamp(38px,6vw,64px)]"
+            alt="profile"
+            className="rounded-full object-cover shadow-[0_0_6px_1px_rgba(255,0,0,0.6),0_0_8px_2px_rgba(0,255,0,0.6),0_0_10px_3px_rgba(0,0,255,0.6),0_0_12px_4px_rgba(255,0,255,0.6)]
+            animate-[glow_3s_ease-in-out_infinite]
+            h-[clamp(38px,6vw,64px)] w-[clamp(38px,6vw,64px)]"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
           />
         </div>
 
-
-      {/* Centered Scroll Levels */}
-      <div className="relative w-full mt-6 sm:mt-10 pb-6 overflow-x-auto">
-        <div className="flex justify-center gap-2 px-4 py-6 min-w-max bg-white/40 rounded-xl">
-          {levels.map((lv) => (
-            <AbyssLevelButton
-              key={lv.id}
-              {...lv}
-              onClick={() => lv.unlocked && navigate(`/level/${lv.id}/intro`)}
-            />
-          ))}
+        {/* Scroll Levels */}
+        <div className="relative w-full mt-6 sm:mt-10 pb-6 overflow-x-auto">
+          <div className="flex justify-center gap-2 px-4 py-6 min-w-max bg-white/40 rounded-xl">
+            {levels.map((lv) => (
+              <AbyssLevelButton
+                key={lv.id}
+                {...lv}
+                onClick={() => lv.unlocked && navigate(`/level/${lv.id}/intro`)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

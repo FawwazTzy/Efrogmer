@@ -6,7 +6,7 @@ const WG_Words = [
   { id: 4, word: "Lazy", pos: "adjective", top: 360, left: 260 },
   { id: 5, word: "Cold", pos: "adjective", top: 40, left: 520 },
   { id: 6, word: "Strong", pos: "adjective", top: 160, left: 250 },
-  { id: 7, word: "Clever", pos: "adjective", top: 260, left: 1000 },
+  { id: 7, word: "Clever", pos: "adjective", top: 270, left: 1000 },
   { id: 8, word: "Tall", pos: "adjective", top: 240, left: 640 },
   { id: 9, word: "Brave", pos: "adjective", top: 430, left: 330 },
   // Adverb 2
@@ -29,7 +29,7 @@ const WG_Words = [
 // Verb 4
   { id: 25, word: "Sleep", pos: "verb", top: 30, left: 840 },
   { id: 26, word: "Jump", pos: "verb", top: 150, left: 430 },
-  { id: 27, word: "Read", pos: "verb", top: 290, left: 430 },
+  { id: 27, word: "Read", pos: "verb", top: 290, left: 460 },
   { id: 28, word: "Dance", pos: "verb", top: 280, left: 270 },
   { id: 29, word: "Write", pos: "verb", top: 400, left: 670 },
   { id: 30, word: "Study", pos: "verb", top: 190, left: 400 },

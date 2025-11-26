@@ -61,7 +61,7 @@ const Leftside = () => {
         {[
           ["Start", "/mode"],
           ["About", "/rules"],
-          ["Setting", "/rules"],
+          ["Setting", "/setting"],
         ].map(([label, route], i) => (
           <motion.button
             key={i}

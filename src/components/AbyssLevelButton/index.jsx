@@ -14,7 +14,7 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
       transition={{ duration: 0.35 }}
       whileHover={unlocked ? { scale: 1.08 } : {}}
       whileTap={unlocked ? { scale: 0.92 } : {}}
-      className={`relative w-[95px] h-[310px] rounded-t-[50px] overflow-hidden border
+      className={`relative w-[60px] sm:w-[95px] h-[200px] sm:h-[310px] rounded-t-[25px] sm:rounded-t-[50px] overflow-hidden border
         ${
           unlocked
             ? "border-cyan-200 shadow-[0_0_12px_rgba(0,255,255,0.5)]"
@@ -25,19 +25,19 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
     >
 
       {/* Level Number */}
-      <div className="absolute top-7 left-1/2 -translate-x-1/2 text-emerald-950 text-2xl font-bold drop-shadow-lg">
+      <div className="absolute top-4 sm:top-7 left-1/2 -translate-x-1/2 text-emerald-950 text-lg sm:text-2xl font-bold drop-shadow-lg">
         {id}
       </div>
 
       {/* Frog Image */}
       <div
-        className="absolute top-10 bottom-12 left-0 right-0 bg-no-repeat bg-center bg-contain opacity-95"
+        className="absolute top-6 sm:top-10 bottom-8 sm:bottom-12 left-0 right-0 bg-no-repeat bg-center bg-contain opacity-95"
         style={{ backgroundImage: `url(${Frog})` }}
       />
 
       {/* Score & Stars */}
       {unlocked && (
-        <p className="absolute bottom-16 w-full text-center text-gray-900 font-semibold text-xs z-[20]">
+        <p className="absolute bottom-10 sm:bottom-16 w-full text-center text-gray-900 font-semibold text-xs z-[20]">
           <span>{progress.stars >= 1 ? "⭐" : "☆"}</span>
           <span>{progress.stars >= 2 ? "⭐" : "☆"}</span>
           <span>{progress.stars >= 3 ? "⭐" : "☆"}</span>
@@ -48,7 +48,7 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
 
       {/* Target Position Label */}
       {targetPos && (
-        <div className="absolute bottom-8 w-full text-center text-emerald-950 text-xs font-medium">
+        <div className="absolute bottom-4 sm:bottom-8 w-full text-center text-emerald-950 text-xs font-medium">
           {targetPos}
         </div>
       )}

@@ -149,84 +149,84 @@ function Game() {
   }, [moves, lives, words.length, score, initialized, targetScore, currentLevel]);
 
   // 📱 Orientasi (kalau portrait, tampil overlay)
-    const [isPortrait, setIsPortrait] = useState(false);
-    useEffect(() => {
-      const checkOrientation = () => setIsPortrait(window.innerHeight > window.innerWidth);
-      checkOrientation();
-      window.addEventListener("resize", checkOrientation);
-      return () => window.removeEventListener("resize", checkOrientation);
-    }, []);
+  const [isPortrait, setIsPortrait] = useState(false);
+  useEffect(() => {
+    const checkOrientation = () => setIsPortrait(window.innerHeight > window.innerWidth);
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    return () => window.removeEventListener("resize", checkOrientation);
+  }, []);
 
   return (
-    <div className="h-screen w-screen bg-yellow-900 text-white p-2 sm:p-4 overflow-hidden relative">
+    <div className="h-screen w-screen bg-yellow-900 text-white overflow-hidden relative">
       {isPortrait && (
-        <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-6">
-          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">
+        <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg md:text-2xl font-bold mb-2 sm:mb-4">
             Please Rotate Your Device!
           </h2>
-          <p className="text-sm sm:text-lg">This game works best in landscape mode.</p>
+          <p className="text-xs sm:text-sm md:text-lg">This game works best in landscape mode.</p>
         </div>
       )}
 
-    <div className="flex flex-col min-h-screen bg-emerald-900 bg-center bg-cover bg-no-repeat relative">
-      {/* GRID LINES */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:20px_20px]" />
+      <div className="flex flex-col min-h-screen bg-emerald-900 bg-center bg-cover bg-no-repeat relative">
+        {/* GRID LINES */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:20px_20px]" />
 
-      <div className="flex flex-1 p-2 sm:p-4 gap-3 flex-col md:flex-row">
-        {/* HUD LEFT */}
-        <div className="w-full md:w-[200px]">
-          <HUD score={score} targetScore={targetScore} lives={lives} moves={moves} />
-        </div>
-
-        {/* GAME AREA */}
-        <div className="flex-1 relative flex flex-col">
-          {/* Word bubbles */}
-          <div
-            className="
-              relative
-              h-[150px] xs:h-[180px] sm:h-[300px] md:h-[295px] lg:h-[350px]
-              bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')]
-              bg-cover bg-center rounded-lg overflow-hidden"
-          >
-            {words.map((wordData) => (
-              <WordBubble
-                key={wordData.id}
-                wordData={wordData}
-                onDragStart={(e) => handleDragStart(e, wordData.id)}
-                onTouchStart={(e) => handleTouchStart(e, wordData.id)}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                isDragging={wordData.id === draggedWordId}
-                touchPosition={touchPosition}
-              />
-            ))}
+        <div className="flex flex-1 p-1 sm:p-1 md:p-2 gap-2 sm:gap-3 flex-col md:flex-row">
+          {/* HUD LEFT */}
+          <div className="w-full md:w-[200px]">
+            <HUD score={score} targetScore={targetScore} lives={lives} moves={moves} />
           </div>
 
-          {/* Frog target */}
-          <div
-            className="flex justify-center rounded-lg mt-1 py-2 bg-gradient-to-t from-yellow-200 to-emerald-400"
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
-            data-targetpos={level.targetPos}
-          >
-            <FrogTarget targetPos={level.targetPos} onDrop={(wordId) => processDrop(Number(wordId))} />
+          {/* GAME AREA */}
+          <div className="flex-1 relative flex flex-col">
+            {/* Word bubbles */}
+            <div
+              className="
+                relative
+                h-[120px] xs:h-[150px] sm:h-[180px] md:h-[300px] lg:h-[295px] xl:h-[350px]
+                bg-[url('https://i.pinimg.com/1200x/bf/11/1b/bf111b1a08f048d323a218467dbf7aeb.jpg')]
+                bg-cover bg-center rounded-lg overflow-hidden"
+            >
+              {words.map((wordData) => (
+                <WordBubble
+                  key={wordData.id}
+                  wordData={wordData}
+                  onDragStart={(e) => handleDragStart(e, wordData.id)}
+                  onTouchStart={(e) => handleTouchStart(e, wordData.id)}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  isDragging={wordData.id === draggedWordId}
+                  touchPosition={touchPosition}
+                />
+              ))}
+            </div>
+
+            {/* Frog target */}
+            <div
+              className="flex justify-center rounded-lg mt-0.5 sm:mt-1 py-1 sm:py-2 bg-gradient-to-t from-yellow-200 to-emerald-400"
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+              data-targetpos={level.targetPos}
+            >
+              <FrogTarget targetPos={level.targetPos} onDrop={(wordId) => processDrop(Number(wordId))} />
+            </div>
           </div>
         </div>
+
+        {showWin && (
+          <WinModal
+            stars={stars}
+            score={score}
+            targetScore={targetScore}
+            moves={moves}
+            totalMoves={totalMoves}
+            currentLevel={currentLevel}
+            isGameOver={stars === 0}
+          />
+        )}
       </div>
-
-      {showWin && (
-        <WinModal
-          stars={stars}
-          score={score}
-          targetScore={targetScore}
-          moves={moves}
-          totalMoves={totalMoves}
-          currentLevel={currentLevel}
-          isGameOver={stars === 0}
-        />
-      )}
     </div>
-  </div>
   );
 }
 

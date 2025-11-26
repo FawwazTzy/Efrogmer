@@ -35,7 +35,7 @@ export default function LevelIntro() {
   }, []);
 
   return (
-    <div className="h-screen w-screen bg-yellow-900 text-white p-2 sm:p-4 overflow-hidden relative">
+    <div className="h-screen w-screen text-white overflow-hidden relative">
       {isPortrait && (
         <div className="absolute inset-0 z-50 bg-emerald-950/90 flex flex-col items-center justify-center text-center p-6">
           <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4">

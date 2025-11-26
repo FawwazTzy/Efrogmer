@@ -77,7 +77,7 @@ export default function MapPage() {
         </div>
 
         {/* Scroll Levels */}
-        <div className="relative w-full  overflow-x-auto">
+        <div className="relative w-full overflow-x-auto">
           {isPortrait ? (
             // Grid layout for portrait (HP) - 3 columns, responsive
             <div className="grid grid-cols-3 gap-1 sm:gap-2 px-2 py-4 sm:px-4 sm:py-6 bg-white/40 rounded-xl mx-2 sm:mx-4">

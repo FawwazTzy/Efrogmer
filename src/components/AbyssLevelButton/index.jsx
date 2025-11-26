@@ -14,7 +14,7 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
       transition={{ duration: 0.35 }}
       whileHover={unlocked ? { scale: 1.08 } : {}}
       whileTap={unlocked ? { scale: 0.92 } : {}}
-      className={`relative w-[60px] sm:w-[95px] h-[200px] sm:h-[310px] rounded-t-[25px] sm:rounded-t-[50px] overflow-hidden border
+      className={`relative w-[60px] sm:w-[95px] h-[200px] sm:h-[260px] rounded-t-[25px] sm:rounded-t-[50px] overflow-hidden border
         ${
           unlocked
             ? "border-cyan-200 shadow-[0_0_12px_rgba(0,255,255,0.5)]"
@@ -31,7 +31,7 @@ export default function AbyssLevelButton({ id, unlocked, onClick, targetPos }) {
 
       {/* Frog Image */}
       <div
-        className="absolute top-6 sm:top-10 bottom-8 sm:bottom-12 left-0 right-0 bg-no-repeat bg-center bg-contain opacity-95"
+        className="absolute top-6 bottom-8 sm:bottom-12 left-0 right-0 bg-no-repeat bg-center bg-contain opacity-95"
         style={{ backgroundImage: `url(${Frog})` }}
       />
 

@@ -56,34 +56,55 @@ export default function LevelIntro() {
 
         <div className="relative w-full max-w-5xl flex flex-col md:flex-row gap-2 sm:gap-4 md:gap-6 justify-center">
           {/* LEFT PANEL */}
-          <div
-            className="w-[80px] sm:w-[95px] md:w-[110px] lg:w-32
+        <div
+          className="w-[80px] sm:w-[95px] md:w-[110px] lg:w-32
           h-[250px] sm:h-[300px] md:h-[350px] lg:h-[420px]
           rounded-xl bg-emerald-600/30 backdrop-blur-lg 
           border border-emerald-500/40 shadow-[0_0_18px_rgba(0,255,180,0.28)]
-          flex flex-col items-center justify-start pt-3 sm:pt-5 mx-auto md:mx-0"
-          >
+          flex flex-col items-center justify-between py-3 sm:py-5 mx-auto md:mx-0"
+        >
+          {/* Level Icon */}
+          <div className="flex flex-col items-center gap-3">
             <div
               className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full 
-            bg-[url('https://i.pinimg.com/1200x/16/64/70/166470feb593d150b093edd0a411d3ef.jpg')]
-            bg-cover bg-center text-[#0c1a28] flex items-center justify-center
-            text-lg sm:text-2xl font-poppins border border-emerald-900 shadow-lg"
+              bg-[url('https://i.pinimg.com/1200x/16/64/70/166470feb593d150b093edd0a411d3ef.jpg')]
+              bg-cover bg-center text-[#0c1a28] flex items-center justify-center
+              text-lg sm:text-2xl font-poppins border border-emerald-900 shadow-lg"
             >
               {level.id}
             </div>
 
+            {/* Thumbnail */}
             <div
-              className="mt-3 sm:mt-4 w-16 h-20 sm:w-20 sm:h-28 md:w-24 md:h-36 rounded-lg 
-            bg-[url('https://i.pinimg.com/1200x/8b/5c/50/8b5c509902b8a1a4cf9e062f9cbe40d9.jpg')] 
-            bg-cover bg-center border border-white/10 shadow-md"
+              className="w-16 h-20 sm:w-20 sm:h-28 md:w-24 md:h-36 rounded-lg 
+              bg-[url('https://i.pinimg.com/1200x/8b/5c/50/8b5c509902b8a1a4cf9e062f9cbe40d9.jpg')] 
+              bg-cover bg-center border border-white/10 shadow-md"
             />
+          </div>
 
-            <p className="absolute font-poppins bg-slate-200 p-2 sm:p-4 bottom-12 sm:bottom-16 w-full text-center text-gray-900 font-semibold text-xs sm:text-sm z-[20]">
+          {/* Progress */}
+          <div className="w-full text-center font-poppins mb-1">
+            <p className="bg-slate-200 text-gray-900 font-semibold text-[10px] sm:text-xs py-1 rounded-md">
               ⭐ {progress.stars}
               <br />
               Score: <span className="text-blue-600">{progress.score}</span>
             </p>
           </div>
+
+          {/* Start Button */}
+          <div className="pb-1 sm:pb-2">
+            <button
+              onClick={() => navigate(`/level/${level.id}/play`)}
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full 
+              bg-gradient-to-r from-yellow-200 via-emerald-200 to-emerald-500
+              text-[#0b1320] font-poppins shadow-[0_0_12px_rgba(255,255,170,0.7)]
+              hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,160,0.85)]
+              transition text-xs sm:text-sm font-semibold"
+            >
+              ▶ Start
+            </button>
+          </div>
+        </div>
 
           {/* RIGHT PANEL */}
           <div
@@ -112,7 +133,7 @@ export default function LevelIntro() {
               </h2>
 
               <div
-                className="w-full font-poppins bg-black/50 border border-white/15
+                className="w-full overflow-y-auto h-[60dvh] font-poppins bg-black/50 border border-white/15
               px-2 sm:px-3 py-1.5 sm:py-2 rounded-md space-y-1 text-[10px] sm:text-xs md:text-sm text-gray-200"
               >
                 <p>
@@ -134,19 +155,6 @@ export default function LevelIntro() {
                   {level.function}
                 </p>
               </div>
-            </div>
-
-            <div className="mt-4 sm:mt-5 flex justify-end">
-              <button
-                onClick={() => navigate(`/level/${level.id}/play`)}
-                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full 
-                bg-gradient-to-r from-yellow-200 via-emerald-200 to-emerald-500
-                text-[#0b1320] font-poppins shadow-[0_0_12px_rgba(255,255,170,0.7)]
-                hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,160,0.85)]
-                transition text-xs sm:text-sm font-semibold"
-              >
-                ▶ Start
-              </button>
             </div>
           </div>
         </div>

@@ -179,7 +179,7 @@ function Game() {
           </div>
 
           {/* GAME AREA */}
-          <div className="flex-1 relative flex flex-col">
+          <div className="flex-1 h-[100dvh] relative flex flex-col">
             {/* Word bubbles */}
             <div
               className="

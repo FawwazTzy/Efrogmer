@@ -1,13 +1,17 @@
-// Setting.jsx
 import React from "react";
+import UserPanel from "../../components/Userpanel"; // 🔥 tambahkan ini
 
 const Setting = ({ isMusicOn, setIsMusicOn, volume, setVolume }) => {
   return (
-    <div className="p-6">
+    <div className="bg-[url('https://cdn.pixabay.com/photo/2014/04/03/11/57/lotus-312694_1280.png')] bg-cover bg-no-repeat bg-center h-screen p-6 text-white">
+
       <h1 className="text-xl font-bold mb-4">Settings</h1>
 
+      {/* 🔥 Panel User */}
+      <UserPanel />
+
       {/* Toggle backsound */}
-      <label className="flex items-center gap-2 mb-4">
+      <label className="flex items-center gap-2 mb-4 mt-6">
         <input
           type="checkbox"
           checked={isMusicOn}

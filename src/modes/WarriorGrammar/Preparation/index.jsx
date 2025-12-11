@@ -148,14 +148,50 @@ const Preparation = () => {
             Play Now!
           </motion.button>
 
-           <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/advance")}
-              className="bg-red-600 w-full font-poppins text-white font-semibold rounded-lg px-20 py-8 shadow-md hover:bg-red-900 transition-all duration-150 text-lg"
-            >
-            Play Now!
-          </motion.button>
+          <div className="bg-slate-400 px-12 py-12 rounded-xl">
+            <h2 className="text-2xl font-bold mb-2 text-blue-700">Hard mode</h2>
+            <ul className="list-disc font-poppins list-inside space-y-2">
+                <li>
+                  <strong>Limited Time Duration</strong>
+                  <ul>
+                    <li>Players are given an initial time limit of <strong>3 minutes</strong> to complete the vocabulary challenge.</li>
+                    <li>This system is designed to enhance focus, accuracy, and quick thinking in language mastery.</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <strong>Time Extension Mechanism</strong>
+                  <ul>
+                    <li>Each correct answer grants an additional <strong>3 seconds</strong> of gameplay time.</li>
+                    <li>This feature serves as an incentive for players to respond accurately while maintaining their remaining time.</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <strong>Higher Difficulty Level</strong>
+                  <ul>
+                    <li>The vocabulary presented is more <strong>advanced</strong> and complex compared to easier modes.</li>
+                    <li>This aims to stimulate intermediate to advanced English proficiency and broaden the players' lexical knowledge.</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <strong>Learning Objectives</strong>
+                  <ul>
+                    <li>To encourage players to practice under time pressure, thereby improving their accuracy in using vocabulary.</li>
+                    <li>To enhance literacy skills, cognitive speed, and memory retention through repeated challenges.</li>
+                  </ul>
+                </li>
+              </ul>
+                  <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate("/advance")}
+                  className="bg-red-600 w-full mt-12 font-poppins text-white font-semibold rounded-lg px-20 py-8 shadow-md hover:bg-red-900 transition-all duration-150 text-lg"
+                >
+                Play Now!
+              </motion.button>
+            </div>
         </section>
       </div>
             <div>

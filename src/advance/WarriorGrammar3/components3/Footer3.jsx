@@ -66,17 +66,6 @@ const Footer3 = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-lg font-medium text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li><a href="/mainpage" className="hover:text-white">Home</a></li>
-            <li><a href="/about" className="hover:text-white">About</a></li>
-            <li><a href="/features" className="hover:text-white">Features</a></li>
-            <li><a href="/contact" className="hover:text-white">Contact</a></li>
-          </ul>
-        </div>
-
         {/* Contact */}
         <div>
           <h3 className="text-lg font-medium text-white mb-3">Contact</h3>

@@ -23,11 +23,30 @@ import Login from "./Pages/Login";
 import Duck from "./assets/Sound/Fluffing a Duck.mp3";
 
 const App = () => {
-  const [loadingDone, setLoadingDone] = useState(false);
+  // =====================================================
+  // 🔥 TAMPILKAN WELCOMESCREEN HANYA SEKALI SAJA
+  // =====================================================
+  const [loadingDone, setLoadingDone] = useState(() => {
+    // Jika sudah pernah dibuka sebelumnya → langsung true
+    return localStorage.getItem("firstOpenDone") === "true";
+  });
 
-  // ===========================================
+  if (!loadingDone) {
+    return (
+      <Welcomescreen
+        onLoadingComplete={() => {
+          localStorage.setItem("firstOpenDone", "true");
+          setLoadingDone(true);
+        }}
+      />
+    );
+  }
+  // ======================================================
+
+
+  // ======================================================
   // 🔊 BACKSOUND SYSTEM
-  // ===========================================
+  // ======================================================
   const audioRef = useRef(null);
 
   const [isMusicOn, setIsMusicOn] = useState(() => {
@@ -38,7 +57,6 @@ const App = () => {
     return Number(localStorage.getItem("musicVolume")) || 0.5;
   });
 
-  // Apply volume + play/pause
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
@@ -50,48 +68,36 @@ const App = () => {
       }
     }
   }, [isMusicOn, volume]);
-  // ===========================================
+  // ======================================================
 
-  if (!loadingDone) {
-    return (
-      <Welcomescreen onLoadingComplete={() => setLoadingDone(true)} />
-    );
-  }
 
   return (
     <Router>
 
-      {/* ===========================================
-           🔊 AUDIO BACKSOUND  
-      ============================================ */}
-      <audio
-        ref={audioRef}
-        src={Duck}  // pastikan file ada di /public/assets/
-        loop
-      />
+      {/* 🔊 BACKSOUND */}
+      <audio ref={audioRef} src={Duck} loop />
 
-      {/* ===========================================
-           🔥 SEMUA ROUTE TETAP SAMA  
-      ============================================ */}
+      {/* 🔥 SEMUA ROUTE */}
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/mappage" element={<MapPage />} />
         <Route path="/mode" element={<Mode />} />
+
         <Route
           path="/setting"
           element={
             <Setting
-              setIsMusicOn={setIsMusicOn}
-              setVolume={setVolume}
               isMusicOn={isMusicOn}
+              setIsMusicOn={setIsMusicOn}
               volume={volume}
+              setVolume={setVolume}
             />
           }
         />
 
-        {/* grammar Warrior */}
+        {/* Warrior Grammar */}
         <Route path="/grammarpage" element={<GameTimeMode />} />
         <Route path="/advance" element={<GameTimeMode3 />} />
         <Route path="/preparation" element={<Preparation />} />

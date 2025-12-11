@@ -3,19 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import gavocabicon from "../../../assets/Efrogmer1.jpeg";
 import starticon from "../../../assets/Start.png";
+import bg1 from "../../../assets/MainpageLF.png"
 
 const Leftside = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="
-  min-h-[100dvh]
-  w-full flex flex-col justify-between
-  px-4 py-2
-  sm:px-[120px] sm:py-3
-  bg-[url('https://i.pinimg.com/1200x/1c/d8/24/1cd824ccf720fd694c6884b7a6396109.jpg')]
-  text-[#001e1d] bg-cover bg-center
-">
+    <div
+  className="
+    min-h-[100dvh]
+    w-full flex flex-col justify-between
+    px-4 py-2
+    sm:px-[120px] sm:py-3
+    bg-cover bg-center
+    text-[#001e1d]
+  "
+  style={{ backgroundImage: `url(${bg1})` }}
+>
+
 
       <motion.h1
         className="
@@ -60,7 +65,6 @@ const Leftside = () => {
         ">
         {[
           ["Start", "/mode"],
-          ["About", "/rules"],
           ["Setting", "/setting"],
         ].map(([label, route], i) => (
           <motion.button

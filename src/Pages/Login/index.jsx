@@ -83,21 +83,33 @@ const Login = () => {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex w-full md:w-1/2 justify-center items-center px-6">
+        <div className="flex w-full md:w-1/2 justify-center items-center px-6">
         <div className="bg-white/10 backdrop-blur-xl border border-white/20
-          p-10 rounded-3xl shadow-2xl w-full max-w-md animate-fadeIn">
+            p-10 rounded-3xl shadow-2xl w-full max-w-md animate-fadeIn">
 
-          <h2 className="text-3xl text-emerald-950 font-bold text-center mb-3">Welcome Back</h2>
-          <p className="text-emerald-950 text-center mb-8">
+            <h2 className="text-3xl mt-2 bg-yellow-400 rounded-full text-emerald-950 font-norwester text-center mb-3">
+            Welcome to Efrogmer
+            </h2>
+
+            {/* CENTER IMAGE */}
+            <div className="w-full flex justify-center">
+            <img
+                src={bg1}
+                alt="frog mascot"
+                className="w-[90px] rounded-full drop-shadow-2xl animate-bounce-slow"
+            />
+            </div>
+
+            <p className="text-emerald-950 text-center mb-8">
             Login to continue your learning journey.
-          </p>
+            </p>
 
           {/* GOOGLE BUTTON POP BRUTALISM */}
           <button
             onClick={handleGoogleLogin}
             className="
               w-full flex items-center justify-center gap-3 py-3 px-6
-              font-bold text-emerald-900 bg-[url('https://i.pinimg.com/1200x/16/64/70/166470feb593d150b093edd0a411d3ef.jpg')] rounded-xl
+              font-bold text-emerald-950 bg-[url('https://i.pinimg.com/1200x/16/64/70/166470feb593d150b093edd0a411d3ef.jpg')] rounded-xl
               shadow-[6px_6px_0px_#000] border border-black bg-cover bg-no-repeat bg-center
               hover:translate-y-[-4px] hover:shadow-[10px_10px_0px_#000]
               transition-all duration-300

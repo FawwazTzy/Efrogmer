@@ -2,9 +2,11 @@ import React from "react";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import bg1 from "../../assets/user.png";
+import { useNavigate } from "react-router-dom"; // ⬅️ Tambahkan ini
 
 const UserPanel = () => {
   const user = auth.currentUser;
+  const navigate = useNavigate(); // ⬅️ Hook untuk navigasi
 
   if (!user) {
     return (
@@ -14,12 +16,17 @@ const UserPanel = () => {
     );
   }
 
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/login"); // ⬅️ Redirect ke halaman login
+  };
+
   return (
     <div className="mt-4 p-5 bg-white/10 backdrop-blur-lg rounded-xl text-white shadow-lg">
       {/* Foto Profil */}
       <div className="flex items-center gap-4">
         <img
-          src={bg1}
+          src={bg1} // pakai foto default
           alt="profile"
           className="w-14 h-14 rounded-full shadow-md"
         />
@@ -38,7 +45,7 @@ const UserPanel = () => {
 
       {/* Tombol Logout */}
       <button
-        onClick={() => signOut(auth)}
+        onClick={handleLogout}
         className="w-full mt-5 bg-red-600 py-2 rounded-lg font-semibold hover:bg-red-700 transition"
       >
         Logout

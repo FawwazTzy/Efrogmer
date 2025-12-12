@@ -49,7 +49,7 @@ const WG_HUD3 = ({ timeLeft, score, targetScore, lives, targetPos, showTimeBonus
             absolute -right-5 sm:-right-10
             top-1 sm:top-0
             text-[8px] sm:text-[20px] 
-            font-bold bg-slate-100 p-1 text-lime-900
+            font-bold p-1 text-lime-900
             animate-ping-fast
         "
         >

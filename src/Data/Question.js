@@ -4,6 +4,7 @@ const LEVELS = [
   {
     id: 1,
     targetPos: "Verb",
+    introVideoId: "jgwQ-kqpdKc",
     example: "run, eat, read",
     definition:
       "Verb adalah kata yang menunjukkan tindakan, kejadian, atau keadaan subjek dalam kalimat. Verb bisa dibagi menjadi action verbs (menunjukkan aksi fisik atau mental), linking verbs (menghubungkan subjek dengan pelengkap), dan auxiliary verbs (kata bantu).",
